@@ -130,31 +130,18 @@ local flg,error_code = pcall(function()
 
 
     ----------------------------------------------------------------------------------------------------------------
+    ---- 环绕特效
 
-                -- ThePlayer.components.sword_fairy_com_magic_point_sys:DoDelta(-0.5)
-                -- ThePlayer.components.sword_fairy_com_magic_point_sys:DoDeltaMax(490)
-                -- ThePlayer.components.planardamage:SetBaseDamage(13)
+        -- ThePlayer:PushEvent("add_sword_fx")
+        -- ThePlayer:PushEvent("remove_sword_fx")
 
-                -- ThePlayer.components.sanity:SetLightDrainImmune(false)
-                -- local lightval = CanEntitySeeInDark(ThePlayer) and .9 or ThePlayer.LightWatcher:GetLightValue()
-                -- print("lightval : ",lightval)
+            ThePlayer.test_fn = function(target)
+                SpawnPrefab("sword_fairy_sfx_flying_sword_hit"):PushEvent("Set",{
+                    target = target,
+                    -- speed = 3,
+                })
+            end
 
-                -- ThePlayer.components.sanity.externalmodifiers:SetModifier(ThePlayer,-TUNING.SANITY_NIGHT_MID)
-                -- ThePlayer.components.sword_fairy_com_drunkenness.current = 0.5
-
-                
-                for i = 0, 20, 1 do
-                    ThePlayer:DoTaskInTime(i,function()
-                        local fx = ThePlayer:SpawnChild("sword_fairy_sfx_shadow_shell")
-                        fx:PushEvent("Set",{
-                            color = Vector3(0,100,255),
-                            a = 0.5,
-                            speed = 2,
-                            MultColour_Flag = true,
-                            -- type = 1,
-                        })
-                    end)
-                end
     ----------------------------------------------------------------------------------------------------------------
     print("WARNING:PCALL END   +++++++++++++++++++++++++++++++++++++++++++++++++")
 end)

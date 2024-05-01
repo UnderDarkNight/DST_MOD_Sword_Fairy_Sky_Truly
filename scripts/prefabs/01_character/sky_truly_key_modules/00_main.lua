@@ -21,6 +21,7 @@ return function(inst)
         "prefabs/01_character/sky_truly_key_modules/05_sanity",                                 ---- 理智值相关的
         "prefabs/01_character/sky_truly_key_modules/06_power_of_peace",                         ---- 【安康之力】被动
         "prefabs/01_character/sky_truly_key_modules/07_combat_hook",                            ---- 战斗组件HOOK
+        "prefabs/01_character/sky_truly_key_modules/08_sword_fx",                               ---- 剑环绕的特效
     }
     
     for k, lua_addr in pairs(modules) do

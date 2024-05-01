@@ -11,13 +11,10 @@ end
 local files_name = {
 
 	---------------------------------------------------------------------------------------
+	-- 02_items
+		"sword_fairy_weapon_flying_sword",					--- 飞剑
 
-		-- "sword_fairy_sky_truly_weapon_scythe",											--- 冥界之镰
-		-- "sword_fairy_sky_truly_weapon_scythe_overcome_confinement",						--- 冲破禁锢
-
-
-		-- "sword_fairy_sky_truly_item_faded_memory",										--- 褪色的记忆
-		-- "sword_fairy_sky_truly_item_blissful_memory",										--- 幸福的记忆
+	---------------------------------------------------------------------------------------
 	---------------------------------------------------------------------------------------
 
 }

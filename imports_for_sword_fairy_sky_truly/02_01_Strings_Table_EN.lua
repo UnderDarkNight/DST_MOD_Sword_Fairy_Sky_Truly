@@ -27,9 +27,16 @@ TUNING["sword_fairy_sky_truly.Strings"][this_language] = TUNING["sword_fairy_sky
             },
         --------------------------------------------------------------------
         -- 00_others
-                ["sword_fairy_other_drunkenness_damage"] = {
-                    ["name"] = "love wine as one's life (idiom); fond of the bottle",
-               }
+            ["sword_fairy_other_drunkenness_damage"] = {
+                ["name"] = "love wine as one's life (idiom); fond of the bottle",
+            },
+        --------------------------------------------------------------------
+        -- 02_items
+            ["sword_fairy_weapon_flying_sword"] = {
+                ["name"] = "Flying Sword",
+                ["inspect_str"] = "It's the only flying sword that belongs to a Sword Fairy.",
+                ["recipe_desc"] = "It's the only flying sword that belongs to a Sword Fairy.",
+            },
         --------------------------------------------------------------------
 
 }

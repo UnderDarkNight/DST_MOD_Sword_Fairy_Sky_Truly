@@ -35,7 +35,14 @@ TUNING["sword_fairy_sky_truly.Strings"][this_language] = TUNING["sword_fairy_sky
         -- 00_others
            ["sword_fairy_other_drunkenness_damage"] = {
                 ["name"] = "嗜酒如命",
-           }
+           },
+        --------------------------------------------------------------------
+        -- 02_items
+           ["sword_fairy_weapon_flying_sword"] = {
+                ["name"] = "飞剑",
+                ["inspect_str"] = "独属于剑仙的飞剑",
+                ["recipe_desc"] = "独属于剑仙的飞剑",
+           },
         --------------------------------------------------------------------
 }
 

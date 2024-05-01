@@ -7,6 +7,11 @@
 
 
 AddPlayerPostInit(function(inst)
+    
+    if inst.components.sword_fairy_com_player_rotation == nil then
+        inst:AddComponent("sword_fairy_com_player_rotation")
+    end
+
     if not TheWorld.ismastersim then
         return
     end
@@ -17,6 +22,7 @@ AddPlayerPostInit(function(inst)
     if inst.components.sword_fairy_com_rpc_event == nil then
         inst:AddComponent("sword_fairy_com_rpc_event")
     end
+
 
 end)
 
