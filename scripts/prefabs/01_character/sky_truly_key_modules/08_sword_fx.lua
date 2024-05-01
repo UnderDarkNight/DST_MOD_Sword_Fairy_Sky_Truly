@@ -162,6 +162,7 @@ return function(inst)
 
             local cost_sword_flag = data:Add("flying_sword",0) >= max_sword_num
             inst:ListenForEvent("flying_sword_on_hit_target",function(inst,_table)
+                local target = _table.target
                 if cd_task ~= nil then
                     return
                 end
@@ -171,17 +172,16 @@ return function(inst)
                         local current = data:Add("flying_sword",0)
                         if current >= max_sword_num then
                             cost_sword_flag = true
-                            cd_task = inst:DoTaskInTime(3,function() cd_task = nil end) --- 冷却一会
+                            cd_task = inst:DoTaskInTime(2,function() cd_task = nil end) --- 冷却一会
                         end
                 else
                     ---- 开始消耗飞剑
-                        -- local target = _table.target
-                        -- inst:PushEvent("remove_sword_fx")
-                        inst:PushEvent("remove_sword_fx_for_target",_table.target)
+                        inst:PushEvent("remove_sword_fx_for_target",target)
+                        cd_task = inst:DoTaskInTime(1,function() cd_task = nil end) --- 冷却一会
                         local current = data:Add("flying_sword",0)
                         if current <= 0 then
                             cost_sword_flag = false
-                            cd_task = inst:DoTaskInTime(5,function() cd_task = nil end) --- 冷却一会
+                            cd_task = inst:DoTaskInTime(3,function() cd_task = nil end) --- 冷却一会
                         end
                 end
 
