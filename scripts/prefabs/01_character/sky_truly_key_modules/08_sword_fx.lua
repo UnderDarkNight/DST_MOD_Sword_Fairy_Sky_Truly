@@ -98,6 +98,15 @@ return function(inst)
                 end
                 return nil
             end
+            local function GetFreeSword_DOWN_NUM()
+                local temp_num = 0
+                for i = 1, max_sword_num, 1 do
+                    if cycle_swords_fx[i].BUSY == false and not cycle_swords_fx[i].UP_FLAG then
+                        temp_num = temp_num + 1
+                    end
+                end
+                return temp_num
+            end
         ----------------------------------------------------------------------------------------------------------------------------
         --- 添加/移除
             inst:ListenForEvent("add_sword_fx",function(inst,animover_fn)
@@ -161,41 +170,53 @@ return function(inst)
             local search_target_musthaveoneoftags = nil
 
 
-            inst:ListenForEvent("remove_sword_fx_for_target",function(inst,target)                
-                if attacking_list[target] then
-                    return
+            inst:ListenForEvent("remove_sword_fx_for_target",function(inst,target)
+                local temp_aoe_flag = false
+                if sword_inst_for_dmg_attack_num >= (TUNING.sword_fairy_sky_truly_DEBUGGING_MODE and 3 or 7) then
+                    temp_aoe_flag = true
                 end
-                --- 先判断有没有空余的剑
-                if GetFreeSword_DOWN() == nil then
-                    return
-                end
-                attacking_list[target] = true
-                inst:PushEvent("remove_sword_fx",function()
-                    local temp_aoe_flag = false
-                    if sword_inst_for_dmg_attack_num >= (TUNING.sword_fairy_sky_truly_DEBUGGING_MODE and 3 or 7) then
-                        temp_aoe_flag = true
-                    end
-                    ----------------------------------------------------------------------------------------
-                    ---- 单个目标
-                        if not temp_aoe_flag then
-                            SpawnPrefab("sword_fairy_sfx_flying_sword_hit"):PushEvent("Set",{
-                                target = target,
-                                speed = 1.5,
-                                onhit_fn = function(sword_hit_fx)                                    
-                                    sword_inst_for_dmg_update()
-                                    DoDamage2Target(target)
-                                end,
-                                on_leave_fn = function(sword_hit_fx) --- 重新回到玩家身边
-                                    if sword_surround_active_flag then
-                                        inst:PushEvent("add_sword_fx")
-                                        attacking_list[target] = nil
-                                    end
-                                end,
-                            })
+                if not temp_aoe_flag then
+                    --------------------------------------------------------------------------------------------------------------
+                    ---- 单个攻击
+                        if attacking_list[target] then
+                            return
                         end
-                    ----------------------------------------------------------------
-                    ----- 7次攻击进行一次AOE
-                        if temp_aoe_flag then                                            
+                        --- 先判断有没有空余的剑
+                        if GetFreeSword_DOWN() == nil then
+                            return
+                        end
+                        attacking_list[target] = true
+                        inst:PushEvent("remove_sword_fx",function()
+                            ----------------------------------------------------------------------------------------
+                            ---- 单个目标
+                                SpawnPrefab("sword_fairy_sfx_flying_sword_hit"):PushEvent("Set",{
+                                    target = target,
+                                    speed = 1.5,
+                                    onhit_fn = function(sword_hit_fx)                                    
+                                        sword_inst_for_dmg_update()
+                                        DoDamage2Target(target)
+                                    end,
+                                    on_leave_fn = function(sword_hit_fx) --- 重新回到玩家身边
+                                        if sword_surround_active_flag then
+                                            inst:PushEvent("add_sword_fx")
+                                            attacking_list[target] = nil
+                                        end
+                                    end,
+                                })                        
+                            ----------------------------------------------------------------------------------------
+                        end)
+                    --------------------------------------------------------------------------------------------------------------
+                else
+                    --------------------------------------------------------------------------------------------------------------
+                    ---- AOE
+                        ---- 先囤积3把剑
+                        if GetFreeSword_DOWN_NUM() ~= max_sword_num then
+                            return
+                        end
+                        ---- 移除3把，然后在其中一把挂上后续执行函数
+                        inst:PushEvent("remove_sword_fx")
+                        inst:PushEvent("remove_sword_fx")
+                        inst:PushEvent("remove_sword_fx",function()
                             sword_inst_for_dmg_attack_num = 0
                             local x,y,z = target.Transform:GetWorldPosition()
                             SpawnPrefab("sword_fairy_sfx_flying_sword_hit"):PushEvent("Set",{
@@ -215,6 +236,14 @@ return function(inst)
                                                 for _,temp_target in pairs(ents) do
                                                     DoDamage2Target(temp_target)
                                                     -- print("AOE_target",temp_target)
+                                                    ---- 额外1%生命值上限的直伤
+                                                        if temp_target.components.health and not temp_target.components.health:IsDead() then
+                                                            local temp_health_max = temp_target.components.health.maxhealth
+                                                            local temp_dmg = (temp_health_max/100)*1
+                                                            if temp_dmg > 0 then
+                                                                temp_target.components.health:DoDelta(-temp_dmg)
+                                                            end
+                                                        end
                                                 end
                                                 -- print("AOE_target +++++++++++++++++++++++++++++++ ")
                                                 sword_inst_for_dmg:RemoveTag("AOE")
@@ -231,18 +260,20 @@ return function(inst)
                                                 leave_fx.Transform:SetPosition(x,y,z)
                                                 leave_fx:PushEvent("leave",function()
                                                     leave_fx:Remove()
-                                                    inst:PushEvent("add_sword_fx")
+                                                    if sword_surround_active_flag then
+                                                        inst:PushEvent("add_sword_fx")
+                                                        inst:PushEvent("add_sword_fx")
+                                                        inst:PushEvent("add_sword_fx")
+                                                    end
                                                 end)
                                             ------------------------------------------------------
                                         end,
                                     })
                                 end,
                             })
-                            
-                        end
-                    ----------------------------------------------------------------
-
-                end)
+                        end)
+                    --------------------------------------------------------------------------------------------------------------
+                end
             end)
         ----------------------------------------------------------------------------------------------------------------------------
         --- 自动寻找目标并攻击
@@ -268,7 +299,7 @@ return function(inst)
                     end
                 end
                 if cd_flag then
-                    Search_Target_And_Attack_CD_Task = inst:DoTaskInTime(TUNING.sword_fairy_sky_truly_DEBUGGING_MODE and 2 or 2,function()
+                    Search_Target_And_Attack_CD_Task = inst:DoTaskInTime( (TUNING.sword_fairy_sky_truly_DEBUGGING_MODE and 2 or 2)-0.5,function()
                         Search_Target_And_Attack_CD_Task = nil
                     end)
                 end
