@@ -32,10 +32,16 @@ return function(inst)
             
         ----------------------------------------------------------------------------------------------------------------------------
         --- 特效伤害更新
-            local sword_inst_for_dmg_update = function()
-                local player_mp_max = inst.components.sword_fairy_com_magic_point_sys:GetMax()
-                sword_inst_for_dmg.components.weapon:SetDamage(10 + player_mp_max/7 )
-                sword_inst_for_dmg.components.planardamage:SetBaseDamage(player_mp_max/7)
+            local sword_inst_for_dmg_update = function(is_aoe_attack)
+                if is_aoe_attack then
+                    local player_mp_max = inst.components.sword_fairy_com_magic_point_sys:GetMax()
+                    sword_inst_for_dmg.components.weapon:SetDamage(10 + player_mp_max/7 )
+                    sword_inst_for_dmg.components.planardamage:SetBaseDamage(player_mp_max/7)
+                else
+                    local player_mp_max = inst.components.sword_fairy_com_magic_point_sys:GetMax()
+                    sword_inst_for_dmg.components.weapon:SetDamage(10 + player_mp_max/7 )
+                    sword_inst_for_dmg.components.planardamage:SetBaseDamage(player_mp_max/7)
+                end
             end
         ----------------------------------------------------------------------------------------------------------------------------
         --- 计数器
@@ -148,11 +154,21 @@ return function(inst)
             local function Check_Can_Attack_Target(target)
                 -- return true
                 if attacking_list[target] ~= true
-                    and target.components.health and not target.components.health:IsDead()
+                    and ( target.components.health and not target.components.health:IsDead() )
                     and target.components.combat
                     and target.components.combat.target and target.components.combat.target:IsValid()
                     and target.components.combat.target:HasOneOfTags({"player","companion","structure","wall"})
                     and target.components.combat:CanBeAttacked(inst)
+                    then
+                        return true
+                    end
+                    return false
+            end
+            local function Check_Can_Attack_Target_Auto(target)
+                -- return true
+                if attacking_list[target] ~= true
+                    and ( target.components.health and not target.components.health:IsDead() )
+                    and target.components.combat and target.components.combat:CanBeAttacked(inst)
                     then
                         return true
                     end
@@ -171,6 +187,9 @@ return function(inst)
 
 
             inst:ListenForEvent("remove_sword_fx_for_target",function(inst,target)
+                if not Check_Can_Attack_Target(target) then
+                    return
+                end
                 local temp_aoe_flag = false
                 if sword_inst_for_dmg_attack_num >= (TUNING.sword_fairy_sky_truly_DEBUGGING_MODE and 3 or 7) then
                     temp_aoe_flag = true
@@ -231,7 +250,7 @@ return function(inst)
                                             --- 寻找AOE目标并造成伤害
                                                 sword_inst_for_dmg:AddTag("AOE")
                                                 -- print("AOE_target +++++++++++++++++++++++++++++++ ")
-                                                sword_inst_for_dmg_update()
+                                                sword_inst_for_dmg_update(true)
                                                 local ents = TheSim:FindEntities(x, y, z, 8, search_target_musthavetags, search_target_canthavetags, search_target_musthaveoneoftags)
                                                 for _,temp_target in pairs(ents) do
                                                     DoDamage2Target(temp_target)
@@ -290,7 +309,7 @@ return function(inst)
                 local delay_time = 0
                 local delay_time_delta = 0.3
                 for _,temp_target in pairs(ents) do
-                    if Check_Can_Attack_Target(temp_target) then
+                    if Check_Can_Attack_Target_Auto(temp_target) then
                         inst:DoTaskInTime(delay_time,function()
                             inst:PushEvent("remove_sword_fx_for_target",temp_target)
                         end)
