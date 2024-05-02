@@ -14,7 +14,7 @@ local function fx()
     -- inst.AnimState:SetBloomEffectHandle("shaders/anim.ksh")
     inst.AnimState:SetBank("sword_fairy_weapon_flying_sword")
     inst.AnimState:SetBuild("sword_fairy_weapon_flying_sword")
-    inst.AnimState:PlayAnimation("fx_hit", false)
+    -- inst.AnimState:PlayAnimation("fx_hit", false)
     -- inst.AnimState:PushAnimation("fx_hit_pst", false)
 
 
@@ -41,7 +41,8 @@ local function fx()
         --     target = inst,
         --     speed = 1,
         --     sound = "",
-        --     fn = function() end,
+        --     onhit_fn = function() end,
+        --     on_leave_fn = function() end,
         -- }
         ------------------------------------------------------------------------------------------------------------------------------------
         if _table == nil then
@@ -63,13 +64,29 @@ local function fx()
             inst.AnimState:SetDeltaTimeMultiplier(_table.speed)
         end
         ------------------------------------------------------------------------------------------------------------------------------------
-            local fn = _table.fn or function(...) end
+            local onhit_fn = _table.onhit_fn or function(...) end
+            local on_leave_fn = _table.on_leave_fn or function(...) end
             inst.anim_over_fn = function(...)
-                fn()
+                onhit_fn(inst)
                 inst:RemoveEventCallback("animover",inst.anim_over_fn)
+
+
+                inst.anim_over_fn = function()
+                    inst:RemoveEventCallback("animover",inst.anim_over_fn)
+                    inst.anim_over_fn = function()
+                        inst:RemoveEventCallback("animover",inst.anim_over_fn)
+                        on_leave_fn(inst)
+                        inst:Remove()
+                    end
+                    inst.AnimState:PlayAnimation("fx_leave",false)
+                    inst:ListenForEvent("animover",inst.anim_over_fn)
+                end
+
                 inst.AnimState:PlayAnimation("fx_hit_pst",false)
-                inst:ListenForEvent("animover",inst.Remove)
+                inst:ListenForEvent("animover",inst.anim_over_fn)
+
             end
+            inst.AnimState:PlayAnimation("fx_hit", false)
             inst:ListenForEvent("animover",inst.anim_over_fn)
         ------------------------------------------------------------------------------------------------------------------------------------
 

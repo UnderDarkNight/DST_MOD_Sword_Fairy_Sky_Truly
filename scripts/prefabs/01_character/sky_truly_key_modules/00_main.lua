@@ -22,6 +22,7 @@ return function(inst)
         "prefabs/01_character/sky_truly_key_modules/06_power_of_peace",                         ---- 【安康之力】被动
         "prefabs/01_character/sky_truly_key_modules/07_combat_hook",                            ---- 战斗组件HOOK
         "prefabs/01_character/sky_truly_key_modules/08_sword_fx",                               ---- 剑环绕的特效
+        "prefabs/01_character/sky_truly_key_modules/09_key_listener",                           ---- 键盘监听器
     }
     
     for k, lua_addr in pairs(modules) do

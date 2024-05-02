@@ -114,9 +114,16 @@ configuration_options =
     { name = "FFFFFF2",label = "",hover = "",options = {{description = "", data = 0}},default = 0, },
 
     ---------------------------------------------------------------------------
-
+    {
+      name = "SPELL_KEY_CALL_SWORD",
+      label = "剑来",
+      hover = "召唤本命飞剑 \n Calling the Flying Sword",
+      options = keys_option,
+      default = "KEY_F5",
+    },
 
     ---------------------------------------------------------------------------
+    { name = "FFFFFF3",label = "",hover = "",options = {{description = "", data = 0}},default = 0, },
 
     ---------------------------------------------------------------------------
 

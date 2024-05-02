@@ -8,6 +8,8 @@ TUNING["sword_fairy_sky_truly.Config"].MP_Limit_and_Defense = GetModConfigData("
 
 TUNING["sword_fairy_sky_truly.Config"].intoxicated = GetModConfigData("intoxicated")     --- 入醉状态界限
 
+TUNING["sword_fairy_sky_truly.Config"].SPELL_KEY_CALL_SWORD = GetModConfigData("SPELL_KEY_CALL_SWORD")     --- 召唤飞剑
+
 
 
 

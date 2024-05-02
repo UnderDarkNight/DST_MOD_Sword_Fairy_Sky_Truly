@@ -57,18 +57,18 @@ local assets = {
         end)
 
         ----- 离开
-            inst:ListenForEvent("leave",function()
+            inst:ListenForEvent("leave",function(inst,animover_fn)
                 inst.Ready = true
                 inst:PushEvent("up",function(inst)
                     inst:Hide()
+                    animover_fn(inst)
                 end)
             end)
         ----- 进入
-            inst:ListenForEvent("join",function()
+            inst:ListenForEvent("join",function(inst,animover_fn)
                 inst.Ready = true
                 inst:Show()
-                inst:PushEvent("down",function(inst)
-                end)
+                inst:PushEvent("down",animover_fn)
             end)
         --- hide/show
             inst:ListenForEvent("hide",function()

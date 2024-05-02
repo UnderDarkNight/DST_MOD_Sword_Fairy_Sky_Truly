@@ -31,6 +31,7 @@ local prefabs_name_list = {
     "01_shadow_shell",                           --- 暗影盾
     "02_sword_fx",                               --- 飞剑环绕特效
     "03_sword_hit",                              --- 飞剑向下攻击特效
+    "04_sword_aoe",                              --- 飞剑AOE攻击特效
 
 
 }

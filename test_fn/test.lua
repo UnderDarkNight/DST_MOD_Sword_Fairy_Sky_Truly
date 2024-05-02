@@ -135,13 +135,21 @@ local flg,error_code = pcall(function()
         -- ThePlayer:PushEvent("add_sword_fx")
         -- ThePlayer:PushEvent("remove_sword_fx")
 
-            ThePlayer.test_fn = function(target)
-                SpawnPrefab("sword_fairy_sfx_flying_sword_hit"):PushEvent("Set",{
-                    target = target,
-                    -- speed = 3,
-                })
-            end
+            -- ThePlayer.test_fn = function(target)
+            --     SpawnPrefab("sword_fairy_sfx_flying_sword_hit"):PushEvent("Set",{
+            --         target = target,
+            --         -- speed = 3,
+            --     })
+            -- end
+            -- print(ThePlayer.components.sword_fairy_com_data:Get("sword_num"))
+            -- ThePlayer:PushEvent("add_sword_fx")
 
+            local cycle_swords_fx = ThePlayer.cycle_fx.sword
+            for i = 1, 3, 1 do
+                -- cycle_swords_fx[i]:Show()                
+                -- cycle_swords_fx[i]:PushEvent("down")
+                print("BUSY",cycle_swords_fx[i].BUSY,"UP",cycle_swords_fx[i].UP_FLAG)
+            end
     ----------------------------------------------------------------------------------------------------------------
     print("WARNING:PCALL END   +++++++++++++++++++++++++++++++++++++++++++++++++")
 end)
