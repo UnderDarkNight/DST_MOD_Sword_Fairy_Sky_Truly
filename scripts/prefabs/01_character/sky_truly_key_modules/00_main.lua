@@ -23,6 +23,7 @@ return function(inst)
         "prefabs/01_character/sky_truly_key_modules/07_combat_hook",                            ---- 战斗组件HOOK
         "prefabs/01_character/sky_truly_key_modules/08_sword_fx",                               ---- 剑环绕的特效
         "prefabs/01_character/sky_truly_key_modules/09_key_listener",                           ---- 键盘监听器
+        "prefabs/01_character/sky_truly_key_modules/10_farm_plants_and_pickable",               ---- 植物采集双倍
     }
     
     for k, lua_addr in pairs(modules) do
@@ -48,5 +49,8 @@ return function(inst)
     end
 
 
+    if TUNING.sword_fairy_sky_truly_DEBUGGING_MODE then
+        inst:AddComponent("reader")
+    end
 
 end

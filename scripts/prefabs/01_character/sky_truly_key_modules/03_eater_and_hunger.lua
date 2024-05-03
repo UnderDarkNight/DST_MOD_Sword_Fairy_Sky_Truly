@@ -98,6 +98,57 @@ return function(inst)
             end)
     end)
 
-        
+    -----------------------------------------------------------------------------------------------------------------------------
+    ---- 【盛宴】【食用不同料理】【饱食度上限增加2点，饥饿速率增加1%】
+        ------------------------------------------------------------------------------------------------------------------
+        ---- 基础API
+            local function RememberFood(food_prefab)
+                local remember_list = inst.components.sword_fairy_com_data:Get("food_remenber_index") or {}
+                remember_list[food_prefab] = true
+                inst.components.sword_fairy_com_data:Set("food_remenber_index",remember_list)            
+            end
+            local function GetRememberedFoodsNum()
+                local remember_list = inst.components.sword_fairy_com_data:Get("food_remenber_index") or {}
+                local food_num = 0
+                for k,v in pairs(remember_list) do
+                    food_num = food_num + 1
+                end
+                return food_num
+            end
+            local function upgrade_max_hunger()
+                local get_food_num = GetRememberedFoodsNum()
+                print("fake error get_food_num",get_food_num)
+                local base_max_hunger = TUNING[string.upper("sword_fairy_sky_truly").."_HUNGER"]
+                inst.components.hunger.max = base_max_hunger + 2 * get_food_num
+                -- inst.components.health:ForceUpdateHUD(true)
+                inst.components.hunger.burnratemodifiers:SetModifier( inst , 1 + 0.01*get_food_num ) --- 饱食度速率增加1%
+            end
+        ------------------------------------------------------------------------------------------------------------------
+        ---- 数据读取/记录
+            inst.components.sword_fairy_com_data:AddOnLoadFn(function()
+                upgrade_max_hunger()
+                local saved_curren_hunger = inst.components.sword_fairy_com_data:Get("current_hunger")
+                if saved_curren_hunger then
+                    inst.components.hunger.current = saved_curren_hunger
+                end
+                inst.components.sword_fairy_com_data:Set("current_hunger",nil)
+            end)
+            inst.components.sword_fairy_com_data:AddOnSaveFn(function()
+                local current_hunger = inst.components.hunger.current
+                inst.components.sword_fairy_com_data:Set("current_hunger",current_hunger)
+            end)
+        ------------------------------------------------------------------------------------------------------------------
+        ---- 吃东西的 event
+            inst:ListenForEvent("oneat",function(inst,_table)
+                local food = _table and _table.food or {}
+                if not ( food.HasTag and food:HasTag("preparedfood") and food.prefab ) then
+                    return
+                end
+                print("+++++ info ",food)
+                RememberFood(food.prefab)
+                upgrade_max_hunger()
+            end)
+        ------------------------------------------------------------------------------------------------------------------
+    -----------------------------------------------------------------------------------------------------------------------------
 
 end

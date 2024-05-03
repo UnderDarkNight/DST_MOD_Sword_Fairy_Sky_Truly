@@ -154,9 +154,16 @@ local flg,error_code = pcall(function()
     ----
         -- ThePlayer.components.sword_fairy_com_magic_point_sys.max = 100
         -- ThePlayer.components.sword_fairy_com_magic_point_sys.current = 100
-        ThePlayer.components.sword_fairy_com_magic_point_sys:SetPercent(1)
+        -- ThePlayer.components.sword_fairy_com_magic_point_sys:SetPercent(1)
         -- print(ThePlayer.replica.sword_fairy_com_magic_point_sys:GetCurrent())
         -- print(ThePlayer.replica.sword_fairy_com_magic_point_sys:GetMax())
+    ----------------------------------------------------------------------------------------------------------------
+    ----
+        -- local PLANT_DEFS = require("prefabs/farm_plant_defs").PLANT_DEFS
+        -- for veggie, veggie_data in pairs(PLANT_DEFS) do
+        --     print(veggie_data.prefab)
+        -- end
+        ThePlayer.components.sword_fairy_com_drunkenness:DoDelta(10)
     ----------------------------------------------------------------------------------------------------------------
     print("WARNING:PCALL END   +++++++++++++++++++++++++++++++++++++++++++++++++")
 end)
