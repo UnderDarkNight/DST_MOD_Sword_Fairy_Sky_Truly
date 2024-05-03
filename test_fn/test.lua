@@ -144,12 +144,19 @@ local flg,error_code = pcall(function()
             -- print(ThePlayer.components.sword_fairy_com_data:Get("sword_num"))
             -- ThePlayer:PushEvent("add_sword_fx")
 
-            local cycle_swords_fx = ThePlayer.cycle_fx.sword
-            for i = 1, 3, 1 do
-                -- cycle_swords_fx[i]:Show()                
-                -- cycle_swords_fx[i]:PushEvent("down")
-                print("BUSY",cycle_swords_fx[i].BUSY,"UP",cycle_swords_fx[i].UP_FLAG)
-            end
+            -- local cycle_swords_fx = ThePlayer.cycle_fx.sword
+            -- for i = 1, 3, 1 do
+            --     -- cycle_swords_fx[i]:Show()                
+            --     -- cycle_swords_fx[i]:PushEvent("down")
+            --     print("BUSY",cycle_swords_fx[i].BUSY,"UP",cycle_swords_fx[i].UP_FLAG)
+            -- end
+    ----------------------------------------------------------------------------------------------------------------
+    ----
+        -- ThePlayer.components.sword_fairy_com_magic_point_sys.max = 100
+        -- ThePlayer.components.sword_fairy_com_magic_point_sys.current = 100
+        ThePlayer.components.sword_fairy_com_magic_point_sys:SetPercent(1)
+        -- print(ThePlayer.replica.sword_fairy_com_magic_point_sys:GetCurrent())
+        -- print(ThePlayer.replica.sword_fairy_com_magic_point_sys:GetMax())
     ----------------------------------------------------------------------------------------------------------------
     print("WARNING:PCALL END   +++++++++++++++++++++++++++++++++++++++++++++++++")
 end)

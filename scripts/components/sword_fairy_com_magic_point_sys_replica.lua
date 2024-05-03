@@ -18,11 +18,13 @@ local sword_fairy_com_magic_point_sys = Class(function(self, inst)
     self._net_current_float = net_float(inst.GUID,"sword_fairy_mp.current","sword_fairy_mp.current")
     self._net_max_float = net_float(inst.GUID,"sword_fairy_mp.max","sword_fairy_mp.max")
 
-    if not TheNet:IsDedicated() then    --- 只在客户端执行
+    if not TheNet:IsDedicated() then
         self.inst:ListenForEvent("sword_fairy_mp.current",function()
+            self.current = self._net_current_float:value()
             self:ActiveUpdates()
         end)
         self.inst:ListenForEvent("sword_fairy_mp.max",function()
+            self.max = self._net_max_float:value()
             self:ActiveUpdates()
         end)
     end

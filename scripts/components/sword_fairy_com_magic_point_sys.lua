@@ -6,16 +6,20 @@
 ]]--
 ----------------------------------------------------------------------------------------------------------------------------------
     local function on_max_update(self,num)
-        local replica_com = self.inst.replica.sword_fairy_com_magic_point_sys or self.inst.replica._.sword_fairy_com_magic_point_sys
-        if replica_com then
-            replica_com:SetMax(num)
-        end
+        self.inst:DoTaskInTime(0,function() -- 不知道为什么，得延迟到游戏正常，不然在初始化阶段会丢失数据
+            local replica_com = self.inst.replica.sword_fairy_com_magic_point_sys or self.inst.replica._.sword_fairy_com_magic_point_sys
+            if replica_com then
+                replica_com:SetMax(num)
+            end
+        end)
     end
     local function on_current_update(self,num)
-        local replica_com = self.inst.replica.sword_fairy_com_magic_point_sys or self.inst.replica._.sword_fairy_com_magic_point_sys
-        if replica_com then
-            replica_com:SetCurrent(num)
-        end
+        self.inst:DoTaskInTime(0,function() -- 不知道为什么，得延迟到游戏正常，不然在初始化阶段会丢失数据
+            local replica_com = self.inst.replica.sword_fairy_com_magic_point_sys or self.inst.replica._.sword_fairy_com_magic_point_sys
+            if replica_com then
+                replica_com:SetCurrent(num)
+            end
+        end)
     end
 ----------------------------------------------------------------------------------------------------------------------------------
 local sword_fairy_com_magic_point_sys = Class(function(self, inst)
@@ -28,7 +32,7 @@ local sword_fairy_com_magic_point_sys = Class(function(self, inst)
 
 
     self.current = 0
-    self.max = 7
+    self.max = 1
 
 
 end,
@@ -70,6 +74,10 @@ nil,
     function sword_fairy_com_magic_point_sys:GetPercent()
         return self.current / self.max
     end
+    function sword_fairy_com_magic_point_sys:SetPercent(num)
+        num = math.clamp(num, 0, 1)
+        self.current = num * self.max
+    end
 ------------------------------------------------------------------------------------------------------------------------------
 ----- 法力值（包括上限） DoDelta
     function sword_fairy_com_magic_point_sys:DoDelta(num)
@@ -81,6 +89,11 @@ nil,
             current = self.current,
             max = self.max
         })
+    end
+    function sword_fairy_com_magic_point_sys:DoDeltaPercent(num)
+        -- num = math.clamp(num, 0, 1)
+        num = num * self.max
+        self:DoDelta(num)
     end
     function sword_fairy_com_magic_point_sys:DoDeltaMax(num)
         local old_max_num = self.max
