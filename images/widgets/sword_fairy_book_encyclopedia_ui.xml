@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Atlas>
+	<Texture filename="sword_fairy_book_encyclopedia_ui.tex" />
+	<Elements>
+		<Element name="axe.tex" u1="0.001" u2="0.196265625" v2="0.602515625" v1="0.409203125" variant="" />
+		<Element name="cookpot.tex" u1="0.001" u2="0.192359375" v2="0.999" v1="0.807640625" variant="" />
+		<Element name="fertilize.tex" u1="0.194359375" u2="0.389625" v2="0.999" v1="0.8056875" variant="" />
+		<Element name="hammer.tex" u1="0.001" u2="0.200171875" v2="0.8036875" v1="0.604515625" variant="" />
+		<Element name="hoe.tex" u1="0.202171875" u2="0.3974375" v2="0.8036875" v1="0.610375" variant="" />
+		<Element name="living_log.tex" u1="0.3994375" u2="0.594703125" v2="0.999" v1="0.803734375" variant="" />
+		<Element name="lock.tex" u1="0.3994375" u2="0.559546875" v2="0.801734375" v1="0.65725" variant="" />
+		<Element name="map_blink.tex" u1="0.596703125" u2="0.790015625" v2="0.999" v1="0.8056875" variant="" />
+		<Element name="pickaxe.tex" u1="0.561546875" u2="0.754859375" v2="0.801734375" v1="0.60646875" variant="" />
+		<Element name="shovel.tex" u1="0.792015625" u2="0.985328125" v2="0.999" v1="0.803734375" variant="" />
+		<Element name="watering_can.tex" u1="0.756859375" u2="0.950171875" v2="0.801734375" v1="0.60646875" variant="" />
+	</Elements>
+</Atlas>

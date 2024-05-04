@@ -18,4 +18,8 @@ AddReplicableComponent("sword_fairy_com_magic_point_sys")  --- 法力值系统
 AddReplicableComponent("sword_fairy_com_drunkenness")  --- 醉意值系统
 AddReplicableComponent("sword_fairy_com_food_refuser")  --- 专属食物拒绝器
 
+AddReplicableComponent("sword_fairy_com_workable")      --- 通用右键交互
+AddReplicableComponent("sword_fairy_com_item_use_to")   --- 通用物品给予
+AddReplicableComponent("sword_fairy_com_acceptable")    --- 通用物品接受
+
 

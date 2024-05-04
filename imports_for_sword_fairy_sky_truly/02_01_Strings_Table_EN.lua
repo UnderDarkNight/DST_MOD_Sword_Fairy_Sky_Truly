@@ -37,6 +37,11 @@ TUNING["sword_fairy_sky_truly.Strings"][this_language] = TUNING["sword_fairy_sky
                 ["inspect_str"] = "It's the only flying sword that belongs to a Sword Fairy.",
                 ["recipe_desc"] = "It's the only flying sword that belongs to a Sword Fairy.",
             },
+            ["sword_fairy_book_encyclopedia"] = {
+                ["name"] = "Encyclopedia",
+                ["inspect_str"] = "Encyclopedia",
+                ["recipe_desc"] = "Encyclopedia",
+           },
         --------------------------------------------------------------------
 
 }

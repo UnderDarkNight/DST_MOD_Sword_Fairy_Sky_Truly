@@ -43,6 +43,11 @@ TUNING["sword_fairy_sky_truly.Strings"][this_language] = TUNING["sword_fairy_sky
                 ["inspect_str"] = "独属于剑仙的飞剑",
                 ["recipe_desc"] = "独属于剑仙的飞剑",
            },
+           ["sword_fairy_book_encyclopedia"] = {
+                ["name"] = "《百科全书》",
+                ["inspect_str"] = "百科全书",
+                ["recipe_desc"] = "百科全书",
+           },
         --------------------------------------------------------------------
 }
 

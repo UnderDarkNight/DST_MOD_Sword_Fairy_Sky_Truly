@@ -117,7 +117,7 @@ return function(inst)
             end
             local function upgrade_max_hunger()
                 local get_food_num = GetRememberedFoodsNum()
-                print("fake error get_food_num",get_food_num)
+                -- print("fake error get_food_num",get_food_num)
                 local base_max_hunger = TUNING[string.upper("sword_fairy_sky_truly").."_HUNGER"]
                 inst.components.hunger.max = base_max_hunger + 2 * get_food_num
                 -- inst.components.health:ForceUpdateHUD(true)
@@ -144,7 +144,7 @@ return function(inst)
                 if not ( food.HasTag and food:HasTag("preparedfood") and food.prefab ) then
                     return
                 end
-                print("+++++ info ",food)
+                -- print("+++++ info ",food)
                 RememberFood(food.prefab)
                 upgrade_max_hunger()
             end)

@@ -5,27 +5,11 @@ end
 
 local temp_assets = {
 
-
-	-- Asset("IMAGE", "images/inventoryimages/sword_fairy_sky_truly_empty_icon.tex"),
-	-- Asset("ATLAS", "images/inventoryimages/sword_fairy_sky_truly_empty_icon.xml"),
-	
-	-- Asset("SHADER", "shaders/mod_test_shader.ksh"),		--- 测试用的
-
-	---------------------------------------------------------------------------
-
-	-- Asset("ANIM", "anim/sword_fairy_sky_truly_hud_wellness.zip"),	--- 体质值进度条
-	-- Asset("ANIM", "anim/sword_fairy_sky_truly_item_medical_certificate.zip"),	--- 诊断单 界面
-	-- Asset("ANIM", "anim/sword_fairy_sky_truly_hud_shop_widget.zip"),	--- 商店界面和按钮
-
-
-
-	---------------------------------------------------------------------------
-	-- Asset("ANIM", "anim/sword_fairy_sky_truly_mutant_frog.zip"),	--- 变异青蛙贴图包
-	-- Asset("ANIM", "anim/sword_fairy_sky_truly_animal_frog_hound.zip"),	--- 变异青蛙狗贴图包
-
-	---------------------------------------------------------------------------
-	-- Asset("SOUNDPACKAGE", "sound/dontstarve_DLC002.fev"),	--- 单机声音集
-	---------------------------------------------------------------------------
+	------------------------------------------------------------------------------------------------------------------------------------------------------
+	--- UI
+		Asset("IMAGE", "images/widgets/sword_fairy_book_encyclopedia_ui.tex"),
+		Asset("ATLAS", "images/widgets/sword_fairy_book_encyclopedia_ui.xml"),
+	------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 }

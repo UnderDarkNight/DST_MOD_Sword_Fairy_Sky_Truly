@@ -163,7 +163,140 @@ local flg,error_code = pcall(function()
         -- for veggie, veggie_data in pairs(PLANT_DEFS) do
         --     print(veggie_data.prefab)
         -- end
-        ThePlayer.components.sword_fairy_com_drunkenness:DoDelta(10)
+        -- ThePlayer.components.sword_fairy_com_drunkenness:DoDelta(10)
+    ----------------------------------------------------------------------------------------------------------------
+    ----
+
+        local book = TheSim:FindFirstEntityWithTag("sword_fairy_book_encyclopedia")
+        -- ThePlayer.components.playercontroller:StartAOETargetingUsing(book)
+
+        -- local active_spell_book = ThePlayer.components.playercontroller:GetActiveSpellBook()
+        -- print("active_spell_book",active_spell_book)
+
+        if ThePlayer.test_root then
+            ThePlayer.test_root:Kill()
+        end
+        ThePlayer.test_root = nil
+        ThePlayer.test_fn = function(book)
+            -- print("test_llll+++")
+            -- ThePlayer.components.playercontroller:StartAOETargetingUsing(book)
+            if ThePlayer.test_root then
+                ThePlayer.test_root:Kill()
+            end
+            ThePlayer.test_root = ThePlayer.HUD:AddChild(Widget())
+            local front_root = ThePlayer.test_root
+            local function close_widget()
+                ThePlayer.test_root:Kill()
+                ThePlayer.test_root = nil
+            end
+            --------------------------------------------------------------------------------------------
+            ----
+
+            --------------------------------------------------------------------------------------------
+            -------- 设置锚点
+                front_root:SetHAnchor(0) -- 设置原点x坐标位置，0、1、2分别对应屏幕中、左、右
+                front_root:SetVAnchor(0) -- 设置原点y坐标位置，0、1、2分别对应屏幕中、上、下
+                front_root:SetPosition(0,0)
+                front_root:MoveToBack()
+                front_root:SetScaleMode(SCALEMODE_FIXEDSCREEN_NONDYNAMIC)   --- 缩放模式
+            --------------------------------------------------------------------------------------------
+            ----
+                local root = front_root:AddChild(Widget())
+            --------------------------------------------------------------------------------------------
+            ----
+                local scale = 0.6
+            --------------------------------------------------------------------------------------------
+            ---- 按钮创建统一API
+                local function CreateButton(image,x,y,unlocked,fn)
+                    local ret_image = image..".tex"
+                    local temp_button = root:AddChild(ImageButton(
+                        "images/widgets/sword_fairy_book_encyclopedia_ui.xml",
+                        ret_image,ret_image,ret_image,ret_image,ret_image
+                    ))
+                    temp_button:SetScale(scale,scale,scale)
+                    temp_button:SetPosition(x or 0,y or 0)
+                    if not unlocked then
+                        fn = function() end
+                    end
+                    temp_button.__old_t_temp_OnMouseButton = temp_button.OnMouseButton
+                    temp_button.OnMouseButton = function(self,button,down,x,y)
+                        local ret = self:__old_t_temp_OnMouseButton(button,down,x,y)
+                        if button == MOUSEBUTTON_LEFT and down == false then
+                            ret = true
+                            fn()
+                            close_widget()
+                        end
+                        return ret
+                    end
+
+                    if not unlocked then
+                        local lock_img = temp_button.image:AddChild(Image("images/widgets/sword_fairy_book_encyclopedia_ui.xml","lock.tex"))
+                        lock_img:SetPosition(0,-2)
+                    end
+
+                    return temp_button
+                end
+            --------------------------------------------------------------------------------------------
+            ----
+                -- local test_button = root:AddChild(ImageButton(
+                --     "images/widgets/sword_fairy_book_encyclopedia_ui.xml",
+                --     "axe.tex",
+                --     "axe.tex",
+                --     "axe.tex",
+                --     "axe.tex",
+                --     "axe.tex"
+                -- ))
+                -- test_button:SetScale(scale,scale,scale)
+                -- test_button:SetPosition(0,0)
+                -- test_button.__old_t_temp_OnMouseButton = test_button.OnMouseButton
+                -- test_button.OnMouseButton = function(self,button,down,x,y)
+                --     local ret = self:__old_t_temp_OnMouseButton(button,down,x,y)
+                --     if button == MOUSEBUTTON_LEFT and down == false then
+                --         ret = true
+                --         print("click+++")
+                --         close_widget()
+                --     end
+                --     return ret
+                -- end
+            --------------------------------------------------------------------------------------------
+            ---- 围绕原点 一圈布局 所有按钮
+                -- CreateButton("axe",0,0,false,function()
+                -- end)
+                local buttons_cmd_table = {}
+                local buttons_name = {
+                    "axe","cookpot","fertilize","hammer","hoe","living_log","map_blink","pickaxe","shovel","watering_can"
+                }
+                local raduis = 110
+                local ange_offset = 18
+                for i,image in ipairs(buttons_name) do
+                    local angle = ange_offset + i * 360 / #buttons_name
+                    local x = math.cos(angle * math.pi / 180) * raduis
+                    local y = math.sin(angle * math.pi / 180) * raduis
+                    CreateButton(image,x,y,true,function()
+                        if ThePlayer:HasTag("playerghost") then 
+                            return
+                        end
+                        ThePlayer.replica.sword_fairy_com_rpc_event:PushEvent("type_switch",image,book)
+                        ThePlayer.components.playercontroller:StartAOETargetingUsing(book)
+                    end)
+                end
+            --------------------------------------------------------------------------------------------
+            -----
+                local scale_base = 0.2
+                local scale_delta = 0.09
+                root:SetScale(scale_base,scale_base,scale_base)
+                local scale_task = nil
+                scale_task = root.inst:DoPeriodicTask(FRAMES,function()
+                    scale_base = scale_base + scale_delta
+                    if scale_base > 1 then
+                        scale_task:Cancel()
+                        return
+                    end
+                    root:SetScale(scale_base,scale_base,scale_base)
+                end)
+            --------------------------------------------------------------------------------------------
+        end
+
     ----------------------------------------------------------------------------------------------------------------
     print("WARNING:PCALL END   +++++++++++++++++++++++++++++++++++++++++++++++++")
 end)

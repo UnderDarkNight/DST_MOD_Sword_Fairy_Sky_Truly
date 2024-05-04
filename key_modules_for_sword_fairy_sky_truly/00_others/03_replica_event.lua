@@ -55,12 +55,12 @@
     --         end)
     -- end
 
-    if EntityScript.ReplicateComponent_fwd_in_pdt_old_fn == nil then
+    if EntityScript.ReplicateComponent_sword_fairy_old_fn == nil then
 
         -- EntityScript.ReplicateComponent
-        EntityScript.ReplicateComponent_fwd_in_pdt_old_fn = EntityScript.ReplicateComponent
+        EntityScript.ReplicateComponent_sword_fairy_old_fn = EntityScript.ReplicateComponent
         EntityScript.ReplicateComponent = function(self,name)
-            self.ReplicateComponent_fwd_in_pdt_old_fn(self,name)
+            self.ReplicateComponent_sword_fairy_old_fn(self,name)
             local replica_com = self.replica[name] or self.replica._[name]
             if replica_com then
                 self:PushEvent("sword_fairy_event.OnEntityReplicated."..tostring(name),replica_com)
