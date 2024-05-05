@@ -115,7 +115,6 @@ nil,
         self:ActiveOnSaveFns()
         local data =
         {
-            -- DataTable = self.DataTable
             current = self.current,
             max = self.max
         }
@@ -123,9 +122,6 @@ nil,
     end
 
     function sword_fairy_com_drunkenness:OnLoad(data)
-        -- if data.DataTable then
-        --     self.DataTable = data.DataTable
-        -- end
         if data.current then
             self.current = data.current
         end

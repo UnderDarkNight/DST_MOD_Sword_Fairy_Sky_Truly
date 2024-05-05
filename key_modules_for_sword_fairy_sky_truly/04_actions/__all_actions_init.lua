@@ -12,4 +12,6 @@ modimport("key_modules_for_sword_fairy_sky_truly/04_actions/03_com_action_workab
 modimport("key_modules_for_sword_fairy_sky_truly/04_actions/04_com_item_acceptable.lua") --- 通用物品接受
 modimport("key_modules_for_sword_fairy_sky_truly/04_actions/05_com_action_item_use_to.lua") --- 通用物品给予
 
+modimport("key_modules_for_sword_fairy_sky_truly/04_actions/06_com_blink_map.lua") --- 地图跳跃
+
 

@@ -31,6 +31,9 @@ TUNING["sword_fairy_sky_truly.Strings"][this_language] = TUNING["sword_fairy_sky
                 ["default"] = "不醉不欢",
                 ["spoiled"] = "都开始发臭了",
            },
+           ["sword_fairy_com_map_jumper"] = {
+                ["DEFAULT"] = "传送",
+           },
         --------------------------------------------------------------------
         -- 00_others
            ["sword_fairy_other_drunkenness_damage"] = {

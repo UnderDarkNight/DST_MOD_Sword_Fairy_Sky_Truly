@@ -6,20 +6,16 @@
 ]]--
 ----------------------------------------------------------------------------------------------------------------------------------
     local function on_max_update(self,num)
-        self.inst:DoTaskInTime(0,function() -- 不知道为什么，得延迟到游戏正常，不然在初始化阶段会丢失数据
             local replica_com = self.inst.replica.sword_fairy_com_magic_point_sys or self.inst.replica._.sword_fairy_com_magic_point_sys
             if replica_com then
                 replica_com:SetMax(num)
             end
-        end)
     end
     local function on_current_update(self,num)
-        self.inst:DoTaskInTime(0,function() -- 不知道为什么，得延迟到游戏正常，不然在初始化阶段会丢失数据
             local replica_com = self.inst.replica.sword_fairy_com_magic_point_sys or self.inst.replica._.sword_fairy_com_magic_point_sys
             if replica_com then
                 replica_com:SetCurrent(num)
             end
-        end)
     end
 ----------------------------------------------------------------------------------------------------------------------------------
 local sword_fairy_com_magic_point_sys = Class(function(self, inst)
@@ -98,10 +94,7 @@ nil,
     function sword_fairy_com_magic_point_sys:DoDeltaMax(num)
         local old_max_num = self.max
         local new_max_num = old_max_num + num
-        if new_max_num < 1 then
-            new_max_num = 1
-        end
-        self.max = new_max_num
+        self.max = math.clamp(new_max_num,1,50000)
         self.inst:PushEvent("magic_point_dodelta_max",{
             old = old_max_num,
             new = self.max
@@ -121,7 +114,6 @@ nil,
         self:ActiveOnSaveFns()
         local data =
         {
-            -- DataTable = self.DataTable
             current = self.current,
             max = self.max
         }
@@ -129,9 +121,6 @@ nil,
     end
 
     function sword_fairy_com_magic_point_sys:OnLoad(data)
-        -- if data.DataTable then
-        --     self.DataTable = data.DataTable
-        -- end
         if data.current then
             self.current = data.current
         end

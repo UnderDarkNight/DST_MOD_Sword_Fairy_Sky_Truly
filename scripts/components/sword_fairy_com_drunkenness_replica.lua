@@ -15,31 +15,37 @@ local sword_fairy_com_drunkenness = Class(function(self, inst)
     self.current = 0
     self.max = 1
 
-    self._net_current_float = net_float(inst.GUID,"sword_fairy_drunkenness.current","sword_fairy_drunkenness.current")
-    self._net_max_float = net_float(inst.GUID,"sword_fairy_drunkenness.max","sword_fairy_drunkenness.max")
-
-    if not TheNet:IsDedicated() then    --- 只在客户端执行
-        self.inst:ListenForEvent("sword_fairy_drunkenness.current",function()
-            self:ActiveUpdates()
-        end)
-        self.inst:ListenForEvent("sword_fairy_drunkenness.max",function()
-            self:ActiveUpdates()
-        end)
-    end
+    self._net_data = net_ushortarray(inst.GUID,"sword_fairy_drunkenness.data","sword_fairy_drunkenness.data")
+    self.inst:ListenForEvent("sword_fairy_drunkenness.data",function()
+        local data = self._net_data:value()
+        self.current = data[1]
+        self.max = data[2]
+        self:ActiveUpdates()
+    end)
 
 end)
 ------------------------------------------------------------------------------------------------------------------------------
 ---- 
     function sword_fairy_com_drunkenness:SetCurrent(num)
         self.current = num
-        self._net_current_float:set(num)
+        local data = {
+            [1] = num,
+            [2] = self.max,
+            [3] = math.random(1000),
+        }
+        self._net_data:set(data)
     end
     function sword_fairy_com_drunkenness:GetCurrent()
         return self.current
     end
     function sword_fairy_com_drunkenness:SetMax(num)
         self.max = num
-        self._net_max_float:set(num)
+        local data = {
+            [1] = self.current,
+            [2] = num,
+            [3] = math.random(1000),
+        }
+        self._net_data:set(data)
     end
     function sword_fairy_com_drunkenness:GetMax()
         return self.max

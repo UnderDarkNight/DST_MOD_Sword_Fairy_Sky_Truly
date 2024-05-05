@@ -22,4 +22,6 @@ AddReplicableComponent("sword_fairy_com_workable")      --- 通用右键交互
 AddReplicableComponent("sword_fairy_com_item_use_to")   --- 通用物品给予
 AddReplicableComponent("sword_fairy_com_acceptable")    --- 通用物品接受
 
+AddReplicableComponent("sword_fairy_com_map_jumper")    --- 地图跳跃
+
 

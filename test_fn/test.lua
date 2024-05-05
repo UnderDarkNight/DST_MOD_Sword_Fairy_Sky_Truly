@@ -308,14 +308,35 @@ local flg,error_code = pcall(function()
 
 
         
-        if rawget(_G,"SpawnPrefab_test_old") == nil then
-            local old_fn = rawget(_G,"SpawnPrefab")
-            rawset(_G,"SpawnPrefab_test_old",old_fn)
-            SpawnPrefab = function(prefab,...)
-                print("SpawnPrefab",prefab)
-                return _G.SpawnPrefab_test_old(prefab,...)
-            end
-        end
+            -- ThePlayer.components.sword_fairy_com_fast_cooker:DoDelta(3)
+
+            -- print(ThePlayer.components.sword_fairy_com_magic_point_sys:GetCurrent())
+
+        -- local inst = TheSim:FindFirstEntityWithTag("sword_fairy_book_encyclopedia")
+        -- ThePlayer.replica.sword_fairy_com_rpc_event:PushEvent("type_switch","map_blink",inst) --- 通过RPC管道回传数据
+        -- ThePlayer.components.playercontroller:DoAction(BufferedAction(ThePlayer, nil, ACTIONS.CAST_SPELLBOOK,inst))
+
+        -- print(ThePlayer.replica.sword_fairy_com_map_jumper:GetCurrent())
+        -- ThePlayer.components.sword_fairy_com_magic_point_sys:DoDelta(10)
+        -- print(ThePlayer.replica.sword_fairy_com_magic_point_sys:GetMax())
+
+        -- ThePlayer.test_fn = function()
+        --     local temp_data = ThePlayer.replica.sword_fairy_com_magic_point_sys._net_data:value()
+        --     for k, v in pairs(temp_data) do
+        --         print(k,v)
+        --     end
+        -- end
+        -- local data = {
+        --     [1] = 123,
+        --     [2] = 444,
+        -- }
+        -- ThePlayer.replica.sword_fairy_com_magic_point_sys._net_data:set(data)
+
+        -- print(ThePlayer.replica.sword_fairy_com_drunkenness:GetMax())
+        -- ThePlayer.components.sword_fairy_com_drunkenness:DoDelta(0)
+        -- ThePlayer.components.sword_fairy_com_magic_point_sys:DoDelta(0)
+        ThePlayer.components.sword_fairy_com_drunkenness:DoDeltaMax(1)
+        ThePlayer.components.sword_fairy_com_magic_point_sys:DoDeltaMax(1)
     ----------------------------------------------------------------------------------------------------------------
     -- reticuleaoecctarget
     ----------------------------------------------------------------------------------------------------------------

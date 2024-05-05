@@ -132,7 +132,7 @@ local Badge = require "widgets/badge"
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 return function(inst)
-    inst:DoTaskInTime(1, function()
+    inst:DoTaskInTime(0, function()
         if inst ~= ThePlayer then
             return
         end
@@ -268,4 +268,11 @@ return function(inst)
         -------------------------------------------------------------------------------------
 
     end)
+
+    if TheWorld.ismastersim then
+        inst:DoTaskInTime(1,function()
+            inst.components.sword_fairy_com_drunkenness:DoDeltaMax(0)
+            inst.components.sword_fairy_com_magic_point_sys:DoDeltaMax(0)
+        end)
+    end
 end

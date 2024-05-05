@@ -16,26 +16,77 @@ local assets = {
     local Badge = require "widgets/badge"
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ---- 安装界面UI
-    local buttons_name = {
-        "axe","cookpot","fertilize","hammer","hoe","living_log","map_blink","pickaxe","shovel","watering_can"
+    local SPELL_PARAM = {
+        ["axe"] = {
+            ["name"] = "axe",
+            ["cd"] = 7,
+            ["mp_cost"] = 7,
+        },
+        ["cookpot"] = {
+            ["name"] = "cookpot",
+            ["cd"] = 1,
+            ["mp_cost"] = 7,            
+        },
+        ["fertilize"] = {
+            ["name"] = "fertilize",
+            ["cd"] = 0,
+            ["mp_cost"] = 7,
+        },
+        ["hammer"] = {
+            ["name"] = "hammer",
+            ["cd"] = 0,
+            ["mp_cost"] = 7,
+        },
+        ["hoe"] = {
+            ["name"] = "hoe",
+            ["cd"] = 0,
+            ["mp_cost"] = 7,
+        },
+        ["living_log"] = {
+            ["name"] = "living_log",
+            ["cd"] = 0,
+            ["mp_cost"] = 7,
+        },
+        ["map_blink"] = {
+            ["name"] = "map_blink",
+            ["cd"] = 1,
+            ["mp_cost"] = 7,
+            ["not_aoe"] = true,
+        },
+        ["pickaxe"] = {
+            ["name"] = "pickaxe",
+            ["cd"] = 7,
+            ["mp_cost"] = 7,
+        },
+        ["shovel"] = {
+            ["name"] = "shovel",
+            ["cd"] = 7,
+            ["mp_cost"] = 7,
+        },
+        ["watering_can"] = {
+            ["name"] = "watering_can",
+            ["cd"] = 0,
+            ["mp_cost"] = 14,
+        },
     }
-    local spell_cd_days = {
-        ["axe"] = 7,
-        ["cookpot"] = 1,
-        ["fertilize"] = 0,
-        ["hammer"] = 0,
-        ["hoe"] = 0,
-        ["living_log"] = 0,
-        ["map_blink"] = 1,
-        ["pickaxe"] = 7,
-        ["shovel"] = 7,
-        ["watering_can"] = 0,        
-    }
-    if TUNING.sword_fairy_sky_truly_DEBUGGING_MODE then
-        for index, v in pairs(spell_cd_days) do
-            spell_cd_days[index] = 0
+
+    ------------------------------------------------------------------------
+    ----- 参数表格转置一下
+        local spell_cd_days = {}
+        local buttons_name = {}
+        local spell_mp_cost = {}
+        for index, cmd_table in pairs(SPELL_PARAM) do
+            spell_cd_days[index] = cmd_table.cd
+            spell_mp_cost[index] = cmd_table.mp_cost
+            table.insert(buttons_name,index)
         end
-    end
+        if TUNING.sword_fairy_sky_truly_DEBUGGING_MODE then
+            for index, v in pairs(spell_cd_days) do
+                spell_cd_days[index] = 0
+                spell_mp_cost[index] = 1
+            end
+        end
+    ------------------------------------------------------------------------
     local function ui_event_setup(inst)
         inst:ListenForEvent("button_ui_open",function(inst,cmd_table)            
             --------------------------------------------------------------------------------------------
@@ -149,8 +200,17 @@ local assets = {
                         if ThePlayer:HasTag("playerghost") then 
                             return
                         end
-                        ThePlayer.replica.sword_fairy_com_rpc_event:PushEvent("type_switch",image,inst) --- 通过RPC管道回传数据
-                        ThePlayer.components.playercontroller:StartAOETargetingUsing(inst)
+                        if SPELL_PARAM[image].not_aoe == true then
+                            ---- 非AOE 状态直接请求执行动作
+                            -- ThePlayer.replica.sword_fairy_com_rpc_event:PushEvent("type_switch",image,inst) --- 通过RPC管道回传数据
+                            -- ThePlayer.components.playercontroller:DoAction(BufferedAction(ThePlayer, nil, ACTIONS.CAST_SPELLBOOK,inst))
+
+                            ThePlayer.replica.sword_fairy_com_rpc_event:PushEvent("type_switch_without_aoe",image,inst) --- 通过RPC管道回传数据
+                        else
+                            ThePlayer.replica.sword_fairy_com_rpc_event:PushEvent("type_switch",image,inst) --- 通过RPC管道回传数据
+                            ThePlayer.components.playercontroller:StartAOETargetingUsing(inst)
+                        end
+
                     end)
                 end
             --------------------------------------------------------------------------------------------
@@ -179,11 +239,20 @@ local assets = {
                     return self:__old_test_temp_OnControl(control,down)
                 end                
             --------------------------------------------------------------------------------------------
+            ----- 右键取消圆环
+                local old_OnMouseButton = front_hud_root.OnMouseButton
+                front_hud_root.OnMouseButton = function(self,button, down, x, y)
+                    if button == MOUSEBUTTON_RIGHT and down then
+                        close_widget()
+                    end
+                    return old_OnMouseButton(self,button, down, x, y)
+                end
+            --------------------------------------------------------------------------------------------
         end)
     end
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
----- CD Checker
-    local function cd_checker_setup(inst)
+---- CD and MP Checker
+    local function cd_and_mp_checker_setup(inst)
         if not TheWorld.ismastersim then
             return
         end
@@ -208,6 +277,14 @@ local assets = {
                         else
                             cmd_table[index] = false
                         end
+                    end
+                end
+            -----------------------------------------------------
+            --- MP 检查器
+                local current_mp = owner.replica.sword_fairy_com_magic_point_sys:GetCurrent()
+                for index, need_mp in pairs(spell_mp_cost) do
+                    if cmd_table[index] == true and current_mp < need_mp and inst:HasTag("unlocked_"..index) then
+                        cmd_table[index] = false
                     end
                 end
             -----------------------------------------------------
@@ -252,39 +329,15 @@ local assets = {
             inst.book_type = book_type
             print("info : switch book type to "..book_type)
         end)
+        inst:ListenForEvent("type_switch_without_aoe",function(inst,book_type)
+            inst.book_type = book_type
+            local owner = inst.components.inventoryitem:GetGrandOwner()
+            if owner and owner:HasTag("player") and owner.components.playercontroller then
+                owner.components.playercontroller:DoAction(BufferedAction(owner, nil, ACTIONS.CAST_SPELLBOOK,inst))
+            end
+        end)
         -- "axe","cookpot","fertilize","hammer","hoe","living_log","map_blink","pickaxe","shovel","watering_can"
-        local book_spell_by_type = {
-            ["axe"] = function(inst,doer,pt)
-                print("axe  work : ",doer,pt)
-            end,
-            ["cookpot"] = function(inst,doer,pt)
-                print("cookpot  work : ",doer,pt)
-            end,
-           ["fertilize"] = function(inst,doer,pt)
-                print("fertilize  work : ",doer,pt)
-           end,
-           ["hammer"] = function(inst,doer,pt)
-                print("hammer  work : ",doer,pt)
-           end,
-           ["hoe"] = function(inst,doer,pt)
-                print("hoe  work : ",doer,pt)
-           end,
-           ["living_log"] = function(inst,doer,pt)
-                print("living_log  work : ",doer,pt)
-           end,
-           ["map_blink"] = function(inst,doer,pt)
-                print("map_blink  work : ",doer,pt)
-           end,
-           ["pickaxe"] = function(inst,doer,pt)
-                print("pickaxe  work : ",doer,pt)
-           end,
-           ["shovel"] = function(inst,doer,pt)
-                print("shovel  work : ",doer,pt)
-           end,
-           ["watering_can"] = function(inst,doer,pt)
-                print("watering_can  work : ",doer,pt)
-           end,
-        }
+        local book_spell_by_type = require("prefabs/02_items/03_spell_book_spells")(SPELL_PARAM)
         inst.components.aoespell:SetSpellFn(function(inst, doer, pt)
             local book_type = tostring(inst.book_type)
             if book_spell_by_type[book_type] then
@@ -293,6 +346,21 @@ local assets = {
             end
             return true
         end)
+        ------------------------------------------------------------------------------------------------------------------------------------------------------
+        --[[
+            ThePlayer.components.playercontroller:DoAction(BufferedAction(ThePlayer, nil, ACTIONS.CAST_SPELLBOOK,inst))  --- 只能在服务端执行？？
+            只能走下面这条函数。client 直接调用 启用那种不需要 放 aoe 圈圈的法术
+        ]]--
+            inst.components.spellbook:SetSpellFn(function(inst,doer)
+                print("spellbook com ",inst,doer)
+                local pt = Vector3(doer.Transform:GetWorldPosition())
+                local book_type = tostring(inst.book_type)
+                if book_spell_by_type[book_type] then
+                    book_spell_by_type[book_type](inst, doer, pt)
+                end
+                return true
+            end)
+        ------------------------------------------------------------------------------------------------------------------------------------------------------
     end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ---- 物品解锁
@@ -302,8 +370,12 @@ local assets = {
                 ["TEST"] = function(inst,item,doer)
                     return not inst:HasTag("unlocked_axe")
                 end,
-                ["ACCEPTED"] = function(inst,item,doer)
-                    item:Remove()
+                ["ACCEPTED"] = function(inst,item,doer)                    
+                    if item.components.stackable then
+                        item.components.stackable:Get():Remove()
+                    else
+                        item:Remove()
+                    end
                     inst.components.sword_fairy_com_data:Set("unlocked_axe",true)
                     inst:AddTag("unlocked_axe")
                     return true
@@ -314,7 +386,11 @@ local assets = {
                     return not inst:HasTag("unlocked_pickaxe")
                 end,
                 ["ACCEPTED"] = function(inst,item,doer)
-                    item:Remove()
+                    if item.components.stackable then
+                        item.components.stackable:Get():Remove()
+                    else
+                        item:Remove()
+                    end
                     inst.components.sword_fairy_com_data:Set("unlocked_pickaxe",true)
                     inst:AddTag("unlocked_pickaxe")
                     return true
@@ -325,7 +401,11 @@ local assets = {
                     return not inst:HasTag("unlocked_shovel")
                 end,
                 ["ACCEPTED"] = function(inst,item,doer)
-                    item:Remove()
+                    if item.components.stackable then
+                        item.components.stackable:Get():Remove()
+                    else
+                        item:Remove()
+                    end
                     inst.components.sword_fairy_com_data:Set("unlocked_shovel",true)
                     inst:AddTag("unlocked_shovel")
                     return true
@@ -336,7 +416,11 @@ local assets = {
                     return not inst:HasTag("unlocked_hammer")
                 end,
                 ["ACCEPTED"] = function(inst,item,doer)
-                    item:Remove()
+                    if item.components.stackable then
+                        item.components.stackable:Get():Remove()
+                    else
+                        item:Remove()
+                    end
                     inst.components.sword_fairy_com_data:Set("unlocked_hammer",true)
                     inst:AddTag("unlocked_hammer")
                     return true
@@ -347,7 +431,11 @@ local assets = {
                     return not inst:HasTag("unlocked_hoe")
                 end,
                 ["ACCEPTED"] = function(inst,item,doer)
-                    item:Remove()
+                    if item.components.stackable then
+                        item.components.stackable:Get():Remove()
+                    else
+                        item:Remove()
+                    end
                     inst.components.sword_fairy_com_data:Set("unlocked_hoe",true)
                     inst:AddTag("unlocked_hoe")
                     return true
@@ -358,7 +446,11 @@ local assets = {
                     return not inst:HasTag("unlocked_fertilize")
                 end,
                 ["ACCEPTED"] = function(inst,item,doer)
-                    item:Remove()
+                    if item.components.stackable then
+                        item.components.stackable:Get():Remove()
+                    else
+                        item:Remove()
+                    end
                     inst.components.sword_fairy_com_data:Set("unlocked_fertilize",true)
                     inst:AddTag("unlocked_fertilize")
                     return true
@@ -369,7 +461,11 @@ local assets = {
                     return not inst:HasTag("unlocked_fertilize")
                 end,
                 ["ACCEPTED"] = function(inst,item,doer)
-                    item:Remove()
+                    if item.components.stackable then
+                        item.components.stackable:Get():Remove()
+                    else
+                        item:Remove()
+                    end
                     inst.components.sword_fairy_com_data:Set("unlocked_fertilize",true)
                     inst:AddTag("unlocked_fertilize")
                     return true
@@ -380,7 +476,11 @@ local assets = {
                     return not inst:HasTag("unlocked_fertilize")
                 end,
                 ["ACCEPTED"] = function(inst,item,doer)
-                    item:Remove()
+                    if item.components.stackable then
+                        item.components.stackable:Get():Remove()
+                    else
+                        item:Remove()
+                    end
                     inst.components.sword_fairy_com_data:Set("unlocked_fertilize",true)
                     inst:AddTag("unlocked_fertilize")
                     return true
@@ -391,7 +491,11 @@ local assets = {
                     return not inst:HasTag("unlocked_fertilize")
                 end,
                 ["ACCEPTED"] = function(inst,item,doer)
-                    item:Remove()
+                    if item.components.stackable then
+                        item.components.stackable:Get():Remove()
+                    else
+                        item:Remove()
+                    end
                     inst.components.sword_fairy_com_data:Set("unlocked_fertilize",true)
                     inst:AddTag("unlocked_fertilize")
                     return true
@@ -402,7 +506,11 @@ local assets = {
                     return not inst:HasTag("unlocked_living_log")
                 end,
                 ["ACCEPTED"] = function(inst,item,doer)
-                    item:Remove()
+                    if item.components.stackable then
+                        item.components.stackable:Get():Remove()
+                    else
+                        item:Remove()
+                    end
                     inst.components.sword_fairy_com_data:Set("unlocked_living_log",true)
                     inst:AddTag("unlocked_living_log")
                     return true
@@ -416,7 +524,11 @@ local assets = {
                     if item.components.finiteuses:GetPercent() < 1 then
                         return false
                     end
-                    item:Remove()
+                    if item.components.stackable then
+                        item.components.stackable:Get():Remove()
+                    else
+                        item:Remove()
+                    end
                     inst.components.sword_fairy_com_data:Set("unlocked_watering_can",true)
                     inst:AddTag("unlocked_watering_can")
                     return true
@@ -427,7 +539,11 @@ local assets = {
                     return not inst:HasTag("unlocked_cookpot")
                 end,
                 ["ACCEPTED"] = function(inst,item,doer)
-                    item:Remove()
+                    if item.components.stackable then
+                        item.components.stackable:Get():Remove()
+                    else
+                        item:Remove()
+                    end
                     inst.components.sword_fairy_com_data:Set("unlocked_cookpot",true)
                     inst:AddTag("unlocked_cookpot")
                     return true
@@ -438,7 +554,11 @@ local assets = {
                     return not inst:HasTag("unlocked_map_blink")
                 end,
                 ["ACCEPTED"] = function(inst,item,doer)
-                    item:Remove()
+                    if item.components.stackable then
+                        item.components.stackable:Get():Remove()
+                    else
+                        item:Remove()
+                    end
                     inst.components.sword_fairy_com_data:Set("unlocked_map_blink",true)
                     inst:AddTag("unlocked_map_blink")
                     return true
@@ -507,7 +627,7 @@ local function fn()
         type_unlocker_setup(inst)
     --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     ---- CD 检查器
-        cd_checker_setup(inst)
+        cd_and_mp_checker_setup(inst)
     --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     ---- 安装界面UI
         ui_event_setup(inst)

@@ -22,6 +22,9 @@ AddPlayerPostInit(function(inst)
     if inst.components.sword_fairy_com_rpc_event == nil then
         inst:AddComponent("sword_fairy_com_rpc_event")
     end
+    if inst.components.sword_fairy_com_fast_cooker == nil then
+        inst:AddComponent("sword_fairy_com_fast_cooker")
+    end
 
 
 end)

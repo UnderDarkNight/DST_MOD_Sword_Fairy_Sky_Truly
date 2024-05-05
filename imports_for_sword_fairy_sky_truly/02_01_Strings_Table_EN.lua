@@ -25,6 +25,9 @@ TUNING["sword_fairy_sky_truly.Strings"][this_language] = TUNING["sword_fairy_sky
                 ["default"] = "not get drunk or happy",
                 ["spoiled"] = "It's starting to stink",
             },
+            ["sword_fairy_com_map_jumper"] = {
+                ["DEFAULT"] = "Teleport",
+           },
         --------------------------------------------------------------------
         -- 00_others
             ["sword_fairy_other_drunkenness_damage"] = {

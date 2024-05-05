@@ -15,33 +15,38 @@ local sword_fairy_com_magic_point_sys = Class(function(self, inst)
     self.current = 0
     self.max = 1
 
-    self._net_current_float = net_float(inst.GUID,"sword_fairy_mp.current","sword_fairy_mp.current")
-    self._net_max_float = net_float(inst.GUID,"sword_fairy_mp.max","sword_fairy_mp.max")
-
-    if not TheNet:IsDedicated() then
-        self.inst:ListenForEvent("sword_fairy_mp.current",function()
-            self.current = self._net_current_float:value()
-            self:ActiveUpdates()
-        end)
-        self.inst:ListenForEvent("sword_fairy_mp.max",function()
-            self.max = self._net_max_float:value()
-            self:ActiveUpdates()
-        end)
-    end
+    self._net_data = net_ushortarray(inst.GUID,"sword_fairy_mp.data","sword_fairy_mp.data")
+    self.inst:ListenForEvent("sword_fairy_mp.data",function()
+        local temp_data = self._net_data:value()
+        self.current = temp_data[1]
+        self.max = temp_data[2]
+        self:ActiveUpdates()
+    end)
+    
 
 end)
 ------------------------------------------------------------------------------------------------------------------------------
 ---- 
     function sword_fairy_com_magic_point_sys:SetCurrent(num)
         self.current = num
-        self._net_current_float:set(num)
+        local data = {
+            [1] = num,
+            [2] = self.max,
+            [3] = math.random(1000),
+        }
+        self._net_data:set(data)
     end
     function sword_fairy_com_magic_point_sys:GetCurrent()
         return self.current
     end
     function sword_fairy_com_magic_point_sys:SetMax(num)
         self.max = num
-        self._net_max_float:set(num)
+        local data = {
+            [1] = self.current,
+            [2] = num,
+            [3] = math.random(1000),
+        }
+        self._net_data:set(data)
     end
     function sword_fairy_com_magic_point_sys:GetMax()
         return self.max

@@ -4,6 +4,7 @@
 -- -- 注意文件路径
 
 
--- modimport("key_modules_for_sword_fairy_sky_truly/03_origin_components_upgrade/01_sanity.lua")  --- Sanity
+modimport("key_modules_for_sword_fairy_sky_truly/03_origin_components_upgrade/01_cookport_quick_finish_sys__with_com_stewer.lua") 
+--- 快速烹饪
 
 
