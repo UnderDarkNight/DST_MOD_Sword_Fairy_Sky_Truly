@@ -2,16 +2,26 @@
 <Atlas>
 	<Texture filename="sword_fairy_book_encyclopedia_ui.tex" />
 	<Elements>
-		<Element name="axe.tex" u1="0.001" u2="0.196265625" v2="0.602515625" v1="0.409203125" variant="" />
-		<Element name="cookpot.tex" u1="0.001" u2="0.192359375" v2="0.999" v1="0.807640625" variant="" />
-		<Element name="fertilize.tex" u1="0.194359375" u2="0.389625" v2="0.999" v1="0.8056875" variant="" />
-		<Element name="hammer.tex" u1="0.001" u2="0.200171875" v2="0.8036875" v1="0.604515625" variant="" />
-		<Element name="hoe.tex" u1="0.202171875" u2="0.3974375" v2="0.8036875" v1="0.610375" variant="" />
-		<Element name="living_log.tex" u1="0.3994375" u2="0.594703125" v2="0.999" v1="0.803734375" variant="" />
-		<Element name="lock.tex" u1="0.3994375" u2="0.559546875" v2="0.801734375" v1="0.65725" variant="" />
-		<Element name="map_blink.tex" u1="0.596703125" u2="0.790015625" v2="0.999" v1="0.8056875" variant="" />
-		<Element name="pickaxe.tex" u1="0.561546875" u2="0.754859375" v2="0.801734375" v1="0.60646875" variant="" />
-		<Element name="shovel.tex" u1="0.792015625" u2="0.985328125" v2="0.999" v1="0.803734375" variant="" />
-		<Element name="watering_can.tex" u1="0.756859375" u2="0.950171875" v2="0.801734375" v1="0.60646875" variant="" />
+		<Element name="axe.tex" u1="0.397484375" u2="0.59275" v2="0.407203125" v1="0.213890625" variant="" />
+		<Element name="axe_gray.tex" u1="0.78615625" u2="0.981421875" v2="0.999" v1="0.8056875" variant="" />
+		<Element name="cookpot.tex" u1="0.59475" u2="0.786109375" v2="0.60446875" v1="0.413109375" variant="" />
+		<Element name="cookpot_gray.tex" u1="0.749046875" u2="0.94040625" v2="0.801734375" v1="0.610375" variant="" />
+		<Element name="fertilize.tex" u1="0.59475" u2="0.790015625" v2="0.411109375" v1="0.217796875" variant="" />
+		<Element name="fertilize_gray.tex" u1="0.1963125" u2="0.391578125" v2="0.207984375" v1="0.014671875" variant="" />
+		<Element name="hammer.tex" u1="0.397484375" u2="0.59665625" v2="0.211890625" v1="0.01271875" variant="" />
+		<Element name="hammer_gray.tex" u1="0.001" u2="0.200171875" v2="0.60446875" v1="0.405296875" variant="" />
+		<Element name="hoe.tex" u1="0.001" u2="0.196265625" v2="0.999" v1="0.8056875" variant="" />
+		<Element name="hoe_gray.tex" u1="0.001" u2="0.196265625" v2="0.403296875" v1="0.209984375" variant="" />
+		<Element name="living_log.tex" u1="0.198265625" u2="0.39353125" v2="0.999" v1="0.803734375" variant="" />
+		<Element name="living_log_gray.tex" u1="0.202171875" u2="0.3974375" v2="0.60446875" v1="0.409203125" variant="" />
+		<Element name="lock.tex" u1="0.001" u2="0.161109375" v2="0.8036875" v1="0.659203125" variant="" />
+		<Element name="map_blink.tex" u1="0.163109375" u2="0.356421875" v2="0.801734375" v1="0.608421875" variant="" />
+		<Element name="map_blink_gray.tex" u1="0.001" u2="0.1943125" v2="0.207984375" v1="0.014671875" variant="" />
+		<Element name="pickaxe.tex" u1="0.39553125" u2="0.58884375" v2="0.999" v1="0.803734375" variant="" />
+		<Element name="pickaxe_gray.tex" u1="0.3994375" u2="0.59275" v2="0.60446875" v1="0.409203125" variant="" />
+		<Element name="shovel.tex" u1="0.358421875" u2="0.551734375" v2="0.801734375" v1="0.60646875" variant="" />
+		<Element name="shovel_gray.tex" u1="0.202171875" u2="0.395484375" v2="0.407203125" v1="0.2119375" variant="" />
+		<Element name="watering_can.tex" u1="0.59084375" u2="0.78415625" v2="0.999" v1="0.803734375" variant="" />
+		<Element name="watering_can_gray.tex" u1="0.553734375" u2="0.747046875" v2="0.801734375" v1="0.60646875" variant="" />
 	</Elements>
 </Atlas>

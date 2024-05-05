@@ -45,7 +45,7 @@ TUNING["sword_fairy_sky_truly.Strings"][this_language] = TUNING["sword_fairy_sky
            },
            ["sword_fairy_book_encyclopedia"] = {
                 ["name"] = "《百科全书》",
-                ["inspect_str"] = "百科全书",
+                ["inspect_str"] = "需要有魔法才能读这本书",
                 ["recipe_desc"] = "百科全书",
            },
         --------------------------------------------------------------------

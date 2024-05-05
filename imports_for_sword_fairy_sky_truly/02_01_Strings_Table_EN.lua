@@ -39,7 +39,7 @@ TUNING["sword_fairy_sky_truly.Strings"][this_language] = TUNING["sword_fairy_sky
             },
             ["sword_fairy_book_encyclopedia"] = {
                 ["name"] = "Encyclopedia",
-                ["inspect_str"] = "Encyclopedia",
+                ["inspect_str"] = "It takes magic to read this book.",
                 ["recipe_desc"] = "Encyclopedia",
            },
         --------------------------------------------------------------------

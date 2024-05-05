@@ -44,17 +44,25 @@
 ---- 数据下发
 
     local function pushevent_server2client(inst,data,tar_inst)
-        if inst and data then
-            local _table = json.decode(data)
+        -- print("+++pushevent.server2client",inst,data,tar_inst)
+        local crash_flag,crash_reason = pcall(function()
+            if inst and data then
+                local _table = json.decode(data)
 
-            if _table and _table.event_name then
-                if tar_inst then
-                    tar_inst:PushEvent(_table.event_name,_table.event_data or {})
-                else
-                    inst:PushEvent(_table.event_name,_table.event_data or {})
+                if _table and _table.event_name then
+                    if tar_inst then
+                        tar_inst:PushEvent(_table.event_name,_table.event_data or {})
+                    else
+                        inst:PushEvent(_table.event_name,_table.event_data or {})
+                    end
+                    -- print(_table.event_name)
                 end
-                -- print(_table.event_name)
             end
+        end)
+        if not crash_flag then
+            print("error pushevent.server2client crash",crash_reason)
+            print("+++++",inst,tar_inst)
+            print("+++++",data)
         end
     end
 
@@ -81,17 +89,22 @@
 ---- 数据上传
 
     local function pushevent_client2server(player_inst,data_json,tar_inst)
-        -- print("info server side ",player_inst,data_json)
-        pcall(function()
-           local event_cmd = json.decode(data_json)
-           if event_cmd.event_name then
-                if tar_inst then
-                    tar_inst:PushEvent(event_cmd.event_name,event_cmd.event_data)
-                else
-                    player_inst:PushEvent(event_cmd.event_name,event_cmd.event_data)
-                end                
-           end
-        end)
+        -- print("+++pushevent.client2server",player_inst,data_json,tar_inst)
+        local crash_flag,crash_reason = pcall(function()
+                local event_cmd = json.decode(data_json)
+                if event_cmd.event_name then
+                        if tar_inst then
+                            tar_inst:PushEvent(event_cmd.event_name,event_cmd.event_data)
+                        else
+                            player_inst:PushEvent(event_cmd.event_name,event_cmd.event_data)
+                        end                
+                end
+            end)
+        if not crash_flag then
+            print("error pushevent.client2server crash",crash_reason)
+            print("+++++",player_inst,tar_inst)
+            print("+++++",data_json)
+        end
     end
 
     AddModRPCHandler("sword_fairy_sky_truly_rpc_namespace", "pushevent.client2server.1", function(player_inst,inst,data_json,tar_inst) ----- Register on the server
