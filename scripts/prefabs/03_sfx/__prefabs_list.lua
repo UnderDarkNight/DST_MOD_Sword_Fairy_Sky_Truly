@@ -33,6 +33,8 @@ local prefabs_name_list = {
     "03_sword_hit",                              --- 飞剑向下攻击特效
     "04_sword_aoe",                              --- 飞剑AOE攻击特效
 
+    "05_tile_outline",                           --- 方块的边框指示
+
 
 }
 

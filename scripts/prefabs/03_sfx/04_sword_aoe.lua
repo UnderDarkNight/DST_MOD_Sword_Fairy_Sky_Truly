@@ -22,10 +22,10 @@ local function fx()
     inst.AnimState:SetLayer(LAYER_BACKGROUND)
     inst.AnimState:SetOrientation(ANIM_ORIENTATION.OnGround)
 
-    inst:AddTag("INLIMBO")
+    -- inst:AddTag("CLASSIFIED")
     inst:AddTag("FX")
     inst:AddTag("NOCLICK")
-
+    inst:AddTag("NOBLOCK")
 
     inst.entity:SetPristine()
 

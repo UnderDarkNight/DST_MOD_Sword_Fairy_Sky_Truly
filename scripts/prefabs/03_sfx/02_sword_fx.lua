@@ -18,7 +18,7 @@ local assets = {
 
         -- inst.AnimState:SetSortOrder(1)
 
-        inst:AddTag("INLIMBO")
+        inst:AddTag("CLASSIFIED")
         inst:AddTag("FX")
         inst:AddTag("NOCLICK")
         inst:AddTag("NOBLOCK")
@@ -105,11 +105,11 @@ local assets = {
         -- inst.AnimState:SetSortOrder(0)
         inst.AnimState:PlayAnimation("cycle",true)
         
-        inst:AddTag("INLIMBO")
+        -- inst:AddTag("CLASSIFIED")
         inst:AddTag("FX")
-        inst:AddTag("NOCLICK")      --- 不可点击
-        -- inst:AddTag("CLASSIFIED")   --  私密的，client 不可观测， FindEntity 默认过滤
-        inst:AddTag("NOBLOCK")      -- 不会影响种植和放置
+        inst:AddTag("NOCLICK")
+        inst:AddTag("NOBLOCK")
+
         -- inst.Transform:SetRotation(math.random(350))
 
         inst.AnimState:HideSymbol("cycle")

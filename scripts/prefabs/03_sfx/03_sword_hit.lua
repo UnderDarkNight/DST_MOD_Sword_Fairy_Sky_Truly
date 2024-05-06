@@ -19,9 +19,10 @@ local function fx()
 
 
 
-    inst:AddTag("INLIMBO")
+    inst:AddTag("CLASSIFIED")
     inst:AddTag("FX")
     inst:AddTag("NOCLICK")
+    inst:AddTag("NOBLOCK")
 
     -- inst:ListenForEvent("animover",inst.Remove)
     -- inst:ListenForEvent("animqueueover",inst.Remove)

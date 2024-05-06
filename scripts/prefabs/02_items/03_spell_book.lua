@@ -83,7 +83,7 @@ local assets = {
         if TUNING.sword_fairy_sky_truly_DEBUGGING_MODE then
             for index, v in pairs(spell_cd_days) do
                 spell_cd_days[index] = 0
-                spell_mp_cost[index] = 1
+                spell_mp_cost[index] = 0
             end
         end
     ------------------------------------------------------------------------

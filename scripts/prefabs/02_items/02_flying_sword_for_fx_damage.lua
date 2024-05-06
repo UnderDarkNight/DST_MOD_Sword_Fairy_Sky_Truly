@@ -47,6 +47,10 @@ local function fn()
     -- inst.AnimState:PlayAnimation("idle",true)
 
     inst:AddTag("weapon")
+    inst:AddTag("INLIMBO")
+    inst:AddTag("FX")
+    inst:AddTag("NOBLOCK")
+    inst:AddTag("NOBLOCK")
 
 
     inst.entity:SetPristine()

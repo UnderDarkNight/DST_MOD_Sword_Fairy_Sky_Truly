@@ -79,6 +79,7 @@ return function(inst)
                 cycle_swords_fx[i].BUSY = false
                 cycle_swords_fx[i].num = i
                 cycle_swords_fx[i].UP_FLAG = true   --- 在顶部
+
             end
             local function GetFreeSword()
                 for i = 1, max_sword_num, 1 do
