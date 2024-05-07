@@ -11,6 +11,7 @@ local file_folders = {
     "03_sfx",               ---- 特效
     "04_foods",             ---- 食物
     "05_debuffs",           ---- debuffs
+    "06_pets",              ---- 宠物
     
 }
 

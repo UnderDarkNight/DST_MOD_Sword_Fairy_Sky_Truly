@@ -28,13 +28,8 @@ local Prefabs_addr_base = string.sub(temp_addr,1,temp_str_index2) .. "/"    --- 
 local prefabs_name_list = {
 
 
-    -- "00_test_sword",                           --- 测试飞剑
-    "00_test_high_light",                           --- 测试飞剑
+    "01_spriter",                  --- 小宠物
 
-    "01_flying_sword",                           --- 飞剑
-    "02_flying_sword_for_fx_damage",             --- 飞剑特效造成的伤害
-    "03_spell_book",                             --- 《百科全书》
-    "04_spell_book_empty",                       --- 《无字天书》
 
 }
 

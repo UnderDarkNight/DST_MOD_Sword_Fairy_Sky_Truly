@@ -82,5 +82,11 @@ TUNING["sword_fairy_sky_truly.Strings"][this_language] = TUNING["sword_fairy_sky
                ["oneat_desc"] = "仙酒",
           },
         --------------------------------------------------------------------
+        -- 06_pets
+          ["sword_fairy_spriter"] = {
+               ["name"] = "莲花精魅",
+               ["inspect_str"] = "很可爱的妖精",
+          },
+        --------------------------------------------------------------------
 }
 

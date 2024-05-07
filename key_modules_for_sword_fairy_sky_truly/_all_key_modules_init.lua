@@ -22,4 +22,7 @@ modimport("key_modules_for_sword_fairy_sky_truly/04_actions/__all_actions_init.l
 modimport("key_modules_for_sword_fairy_sky_truly/05_recipes/__all_recipes_init.lua") 
 -- 所有配方
 
+modimport("key_modules_for_sword_fairy_sky_truly/06_widgets/__all_widgets_init.lua") 
+-- 界面相关
+
 

@@ -76,5 +76,11 @@ TUNING["sword_fairy_sky_truly.Strings"][this_language] = TUNING["sword_fairy_sky
                 ["oneat_desc"] = "Sacred Wine",
            },
         --------------------------------------------------------------------
+        -- 06_pets
+            ["sword_fairy_spriter"] = {
+                ["name"] = "Lotus Goblin",
+                ["inspect_str"] = "Very cute goblin.",
+            },
+        --------------------------------------------------------------------
 
 }
