@@ -32,7 +32,8 @@ local prefabs_name_list = {
 
     "01_flying_sword",                           --- 飞剑
     "02_flying_sword_for_fx_damage",             --- 飞剑特效造成的伤害
-    "03_spell_book",                             --- 技能书
+    "03_spell_book",                             --- 《百科全书》
+    "04_spell_book_empty",                       --- 《无字天书》
 
 }
 

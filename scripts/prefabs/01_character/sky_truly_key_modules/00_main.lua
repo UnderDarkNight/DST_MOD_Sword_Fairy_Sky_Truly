@@ -51,8 +51,8 @@ return function(inst)
     end
 
 
-    if TUNING.sword_fairy_sky_truly_DEBUGGING_MODE then
-        inst:AddComponent("reader")
-    end
+    -- if TUNING.sword_fairy_sky_truly_DEBUGGING_MODE then
+    --     inst:AddComponent("reader")
+    -- end
 
 end

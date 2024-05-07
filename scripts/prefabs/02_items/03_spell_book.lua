@@ -1,6 +1,9 @@
 
 local assets = {
-
+    Asset("ANIM", "anim/sword_fairy_book_encyclopedia.zip"),
+    Asset("ANIM", "anim/sword_fairy_book_encyclopedia.zip"),
+    Asset( "IMAGE", "images/inventoryimages/sword_fairy_book_encyclopedia.tex" ),
+    Asset( "ATLAS", "images/inventoryimages/sword_fairy_book_encyclopedia.xml" ),
 }
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ------ 界面调试
@@ -607,8 +610,8 @@ local function fn()
 
 	MakeInventoryPhysics(inst)
 
-	inst.AnimState:SetBank("book_maxwell")
-	inst.AnimState:SetBuild("book_maxwell")
+	inst.AnimState:SetBank("sword_fairy_book_encyclopedia")
+	inst.AnimState:SetBuild("sword_fairy_book_encyclopedia")
 	inst.AnimState:PlayAnimation("idle")
 
 	inst:AddTag("book")
@@ -707,13 +710,16 @@ local function fn()
 	end
 
 
-	inst.swap_build = "book_maxwell"
+	-- inst.swap_build = "book_maxwell"
+	inst.swap_build = "sword_fairy_book_encyclopedia"
 
 	inst:AddComponent("inspectable")
 
 
 	inst:AddComponent("inventoryitem")
-    inst.components.inventoryitem:ChangeImageName("cane")
+    -- inst.components.inventoryitem:ChangeImageName("cane")
+    inst.components.inventoryitem.imagename = "sword_fairy_book_encyclopedia"
+    inst.components.inventoryitem.atlasname = "images/inventoryimages/sword_fairy_book_encyclopedia.xml"
 
 	inst:AddComponent("aoespell")
     inst.components.aoespell:SetSpellFn(function(inst, doer, pt)        
@@ -731,7 +737,18 @@ local function fn()
 
 
 	inst.castsound = "maxwell_rework/shadow_magic/cast"
-
+    -------------------------------------------------------------------
+    --- 落水影子
+        local function shadow_init(inst)
+            if inst:IsOnOcean(false) then       --- 如果在海里（不包括船）
+                inst.AnimState:Hide("SHADOW")
+            else                                
+                inst.AnimState:Show("SHADOW")
+            end
+        end
+        inst:ListenForEvent("on_landed",shadow_init)
+        shadow_init(inst)
+    -------------------------------------------------------------------
 	return inst
 end
 ----------------------------------------------------------------------------------------------------------------------------------------

@@ -51,6 +51,14 @@ TUNING["sword_fairy_sky_truly.Strings"][this_language] = TUNING["sword_fairy_sky
                 ["inspect_str"] = "需要有魔法才能读这本书",
                 ["recipe_desc"] = "百科全书",
            },
+           ["sword_fairy_book_empty"] = {
+                ["name"] = "《无字天书》",
+                ["inspect_str"] = "需要有魔法才能读这本书，而且什么东西都没有",
+                ["recipe_desc"] = "无字天书",
+                ["spell_fail"] = "这本书没有什么变化",
+                ["spell_succeed"] = "这本书没好像有了一点变化",
+                ["next_day"] = "今天消耗太多了",
+           },
         --------------------------------------------------------------------
 }
 

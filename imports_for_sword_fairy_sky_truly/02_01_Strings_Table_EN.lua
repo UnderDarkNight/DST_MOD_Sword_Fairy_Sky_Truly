@@ -44,7 +44,15 @@ TUNING["sword_fairy_sky_truly.Strings"][this_language] = TUNING["sword_fairy_sky
                 ["name"] = "Encyclopedia",
                 ["inspect_str"] = "It takes magic to read this book.",
                 ["recipe_desc"] = "Encyclopedia",
-           },
+             },
+           ["sword_fairy_book_empty"] = {
+                ["name"] = "Blank Book",
+                ["inspect_str"] = "A book with nothing in it.",
+                ["recipe_desc"] = "Blank Book",
+                ["spell_fail"] = "Nothing has changed in this book.",
+                ["spell_succeed"] = "The book hasn't changed a bit.",
+                ["next_day"] = "I've consumed too much today.",
+            },
         --------------------------------------------------------------------
 
 }
