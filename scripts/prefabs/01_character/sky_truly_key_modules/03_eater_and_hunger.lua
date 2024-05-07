@@ -61,7 +61,7 @@ return function(inst)
             -- inst.components.eater:SetRefusesSpoiledFood(true)
             local old_TestFood = inst.components.eater.TestFood
             inst.components.eater.TestFood = function(self,food, testvalues)
-                if food and food:HasOneOfTags({"spoiled","stale"}) then
+                if food and food:HasOneOfTags({"spoiled","stale","monstermeat"}) then
                     return false
                 end
                 return old_TestFood(self,food, testvalues)
