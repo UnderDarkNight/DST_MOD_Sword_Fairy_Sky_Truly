@@ -9,6 +9,8 @@ local file_folders = {
     "01_character",         ---- 角色相关
     "02_items",             ---- 物品
     "03_sfx",               ---- 特效
+    "04_foods",             ---- 食物
+    "05_debuffs",           ---- debuffs
     
 }
 

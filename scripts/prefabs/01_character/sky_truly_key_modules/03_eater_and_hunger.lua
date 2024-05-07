@@ -23,6 +23,9 @@ return function(inst)
     --- 专属食物拒绝器，用来配合醉意值。醉意值小于等于1点，人物拒绝吃饭
         inst:ListenForEvent("sword_fairy_event.OnEntityReplicated.sword_fairy_com_food_refuser",function(inst,replica_com)
             replica_com.IsRefuse = function(self,food)
+                if food and food:HasTag("sword_fairy_wine") then
+                    return false
+                end
                 if food and food:HasOneOfTags({"spoiled","stale"}) then
                     return true
                 end
@@ -67,6 +70,10 @@ return function(inst)
 
         ----- 人物无法从食物中获取理智值和血量，转而全部改为饱食度。而且收益减半。
             inst.components.eater.custom_stats_mod_fn = function(self, health_delta, hunger_delta, sanity_delta, food, feeder)
+                if food and food:HasTag("sword_fairy_wine") then
+                    hunger_delta = - inst.components.sword_fairy_com_drunkenness:GetCurrent()
+                    return health_delta,hunger_delta,sanity_delta
+                end
                 if hunger_delta < 0 then
                     hunger_delta = 0
                 end
@@ -149,6 +156,29 @@ return function(inst)
                 upgrade_max_hunger()
             end)
         ------------------------------------------------------------------------------------------------------------------
+    -----------------------------------------------------------------------------------------------------------------------------
+    ---- 身上的背包里的酒类会定时增加醉意值。每瓶酒  每7天增加 1点。游戏的一天是480s。扫描定时 10s 。
+        inst:DoPeriodicTask(10,function()
+            local wine_num = 0
+            inst.components.inventory:ForEachItem(function(item)
+                if item and item:HasTag("sword_fairy_wine") then
+                    if item.components.stackable then
+                        wine_num = wine_num + item.components.stackable:StackSize()
+                    else
+                        wine_num = wine_num + 1
+                    end
+                end
+            end)
+            if wine_num == 0 then
+                return
+            end
+            local delta_by_7_days = wine_num
+            local delta_by_10s = delta_by_7_days/(48*7)
+            inst.components.sword_fairy_com_drunkenness:DoDelta(delta_by_10s)
+            if TUNING.sword_fairy_sky_truly_DEBUGGING_MODE then
+                TheNet:Announce("身上有酒，增加醉意值："..tostring(delta_by_10s))
+            end
+        end)
     -----------------------------------------------------------------------------------------------------------------------------
 
 end

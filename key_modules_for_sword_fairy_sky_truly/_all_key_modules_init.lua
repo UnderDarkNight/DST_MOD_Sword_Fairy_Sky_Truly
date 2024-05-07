@@ -19,4 +19,7 @@ modimport("key_modules_for_sword_fairy_sky_truly/03_origin_components_upgrade/__
 modimport("key_modules_for_sword_fairy_sky_truly/04_actions/__all_actions_init.lua") 
 -- 动作组件和sg
 
+modimport("key_modules_for_sword_fairy_sky_truly/05_recipes/__all_recipes_init.lua") 
+-- 所有配方
+
 

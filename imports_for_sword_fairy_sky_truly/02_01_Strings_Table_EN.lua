@@ -54,5 +54,27 @@ TUNING["sword_fairy_sky_truly.Strings"][this_language] = TUNING["sword_fairy_sky
                 ["next_day"] = "I've consumed too much today.",
             },
         --------------------------------------------------------------------
+        -- 04_foods
+            ["sword_fairy_food_white_spirit"] = {
+                ["name"] = "White Spirit",
+                ["inspect_str"] = "White Spirit",
+                ["oneat_desc"] = "White Spirit",
+            },
+            ["sword_fairy_food_fruit_liqor"] = {
+                ["name"] = "Fruit Liqor",
+                ["inspect_str"] = "Fruit Liqor",
+                ["oneat_desc"] = "Fruit Liqor",
+            },
+            ["sword_fairy_food_tincture"] = {
+                ["name"] = "Tincture",
+                ["inspect_str"] = "Tincture",
+                ["oneat_desc"] = "Tincture",
+           },
+           ["sword_fairy_food_sacred_wine"] = {
+                ["name"] = "Sacred Wine",
+                ["inspect_str"] = "Sacred Wine",
+                ["oneat_desc"] = "Sacred Wine",
+           },
+        --------------------------------------------------------------------
 
 }

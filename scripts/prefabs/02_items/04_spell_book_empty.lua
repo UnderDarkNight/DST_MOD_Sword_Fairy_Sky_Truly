@@ -174,45 +174,6 @@ local function fn()
             return true
         end)
     ------------------------------------------------------------------------------------------------------------------------------------------------------
-
-    --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    ----- 虚线圈圈指示器  直接激活函数 ThePlayer.components.playercontroller:StartAOETargetingUsing(book)
-        inst:AddComponent("aoetargeting")
-        inst.components.aoetargeting:SetAllowWater(true)
-        inst.components.aoetargeting.reticule.targetfn = function(...) --- 好像没啥用，没检测到执行
-                                                            local player = ThePlayer
-                                                            local ground = TheWorld.Map
-                                                            local pos = Vector3()
-                                                            --Cast range is 8, leave room for error
-                                                            --4 is the aoe range
-                                                            for r = 7, 0, -.25 do
-                                                                pos.x, pos.y, pos.z = player.entity:LocalToWorldSpace(r, 0, 0)
-                                                                if ground:IsPassableAtPoint(pos.x, 0, pos.z, true) and not ground:IsGroundTargetBlocked(pos) then
-                                                                    return pos
-                                                                end
-                                                            end
-                                                            return pos
-                                                        end
-        inst.components.aoetargeting.reticule.validcolour = { 1, .75, 0, 1 }
-        inst.components.aoetargeting.reticule.invalidcolour = { .5, 0, 0, 1 }
-        inst.components.aoetargeting.reticule.ease = true
-        inst.components.aoetargeting.reticule.mouseenabled = true
-        inst.components.aoetargeting.reticule.twinstickmode = 1
-        inst.components.aoetargeting.reticule.twinstickrange = 8
-        inst.components.aoetargeting.reticule.updatepositionfn = function(inst,pt,reticule_fx,...) --- 覆盖替换官方的 坐标更新函数
-            reticule_fx.Transform:SetPosition(pt.x, pt.y, pt.z)
-            reticule_fx.Ready = true
-        end
-        inst.components.aoetargeting:SetDeployRadius(0)
-        inst.components.aoetargeting:SetShouldRepeatCastFn(nil)
-        -- inst.components.aoetargeting.reticule.reticuleprefab = "reticuleaoe"
-        -- inst.components.aoetargeting.reticule.pingprefab = "reticuleaoeping"
-        inst.components.aoetargeting.reticule.reticuleprefab = "sword_fairy_book_empty_spell_reticule_fx"
-        inst.components.aoetargeting.reticule.pingprefab = nil
-    --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-    --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
     --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -238,10 +199,6 @@ local function fn()
         print("++++++++++++",inst,doer,pt)
         return true
     end)
-
-
-    -- inst.components.aoetargeting:SetTargetFX("reticuleaoecctarget") --- 施法期间的fx
-    inst.components.aoetargeting:SetTargetFX("sword_fairy_book_empty_spell_reticule_fx") --- 施法期间的fx
 
 	MakeSmallBurnable(inst, TUNING.MED_BURNTIME)
 	MakeSmallPropagator(inst)

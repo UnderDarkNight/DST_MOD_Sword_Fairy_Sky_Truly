@@ -60,5 +60,27 @@ TUNING["sword_fairy_sky_truly.Strings"][this_language] = TUNING["sword_fairy_sky
                 ["next_day"] = "今天消耗太多了",
            },
         --------------------------------------------------------------------
+        -- 04_foods
+          ["sword_fairy_food_white_spirit"] = {
+               ["name"] = "白酒",
+               ["inspect_str"] = "白酒",
+               ["oneat_desc"] = "白酒",
+          },
+          ["sword_fairy_food_fruit_liqor"] = {
+               ["name"] = "果酒",
+               ["inspect_str"] = "果酒",
+               ["oneat_desc"] = "果酒",
+          },
+          ["sword_fairy_food_tincture"] = {
+               ["name"] = "药酒",
+               ["inspect_str"] = "药酒",
+               ["oneat_desc"] = "药酒",
+          },
+          ["sword_fairy_food_sacred_wine"] = {
+               ["name"] = "仙酒",
+               ["inspect_str"] = "仙酒",
+               ["oneat_desc"] = "仙酒",
+          },
+        --------------------------------------------------------------------
 }
 
