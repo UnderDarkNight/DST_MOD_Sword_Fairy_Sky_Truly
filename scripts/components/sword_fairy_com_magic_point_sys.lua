@@ -121,11 +121,11 @@ nil,
     end
 
     function sword_fairy_com_magic_point_sys:OnLoad(data)
-        if data.current then
-            self.current = data.current
-        end
         if data.max then
             self.max = data.max
+        end
+        if data.current then
+            self.current = data.current
         end
         self:ActiveOnLoadFns()
     end

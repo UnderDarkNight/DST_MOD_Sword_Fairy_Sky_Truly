@@ -367,49 +367,31 @@ local flg,error_code = pcall(function()
             --     target = ThePlayer,
             --     pt = Vector3(x,y,z),
             -- })
+    ----------------------------------------------------------------------------------------------------------------
+    --
+        -- local food_tags = {}
+        -- for _, temp_data in pairs(FOODGROUP) do
+        --     temp_data.types = temp_data.types or {}
+        --     for _, temp_food_type in pairs(temp_data.types) do
+        --         food_tags[temp_food_type] = true
+        --     end
+        -- end
+        -- for food_type, v in pairs(food_tags) do
+            
+        -- end
+        -- print(ThePlayer.___spriter)
 
-            ThePlayer.__test_hud = function(inst,root)
-                local MP_Badge = root:AddChild(Badge())
-                root.MP_Badge = MP_Badge
-                --------------------------------------------------------------------------------------------------------------------------
-                ----- 坐标初始化
-                    MP_Badge:SetPosition(200,-180,0)
-                    local badge_scale = 1.5
-                    MP_Badge:SetScale(badge_scale,badge_scale,badge_scale)
-                --------------------------------------------------------------------------------------------------------------------------
-                ----- 颜色
-                    MP_Badge.anim:GetAnimState():SetMultColour(unpack({180 / 255, 210 / 255, 182 / 255, 1}))
-                --------------------------------------------------------------------------------------------------------------------------
-                ----- 进度条暂停
-                    MP_Badge.anim:GetAnimState():Pause()
-                    MP_Badge:SetPercent(0.5)
-                --------------------------------------------------------------------------------------------------------------------------
-                ------ 覆盖外框
-                    MP_Badge.circleframe:GetAnimState():OverrideSymbol("frame_circle", "sword_fairy_hud_status", "frame_circle")
-                ------ 内部图案
-                    MP_Badge.__temp_fx = MP_Badge:AddChild(UIAnim())
-                    MP_Badge.__temp_fx:GetAnimState():SetBank("sword_fairy_hud_status")
-                    MP_Badge.__temp_fx:GetAnimState():SetBuild("sword_fairy_hud_status")
-                    MP_Badge.__temp_fx:GetAnimState():PlayAnimation("mp", true)
-                    MP_Badge.__temp_fx:GetAnimState():SetDeltaTimeMultiplier(0.2)
-                    local scale = 0.6
-                    MP_Badge.__temp_fx:SetScale(scale, scale, scale)
-                ----- 数字前移                
-                    MP_Badge.num:MoveToFront()
-                    inst:DoTaskInTime(1,function()
-                        pcall(function()
-                            MP_Badge.maxnum:MoveToFront()                        
-                        end)
-                    end)
-                --------------------------------------------------------------------------------------------------------------------------
-                ----- 参数初始化
-                    local mp_current = inst.replica.sword_fairy_com_magic_point_sys:GetCurrent()
-                    local mp_max = inst.replica.sword_fairy_com_magic_point_sys:GetMax()
-                    local mp_percent = mp_current / mp_max
-                    MP_Badge:SetPercent(mp_percent,mp_max)
-                --------------------------------------------------------------------------------------------------------------------------
-                return MP_Badge
-            end
+        -- ThePlayer.Transform:SetPosition(ThePlayer.___spriter.Transform:GetWorldPosition())
+
+        -- ThePlayer.___spriter:PushEvent("ClosePlayer")
+        -- local spriter = ThePlayer.___spriter
+
+        -- print(spriter.replica.sword_fairy_com_acceptable)
+
+
+        TheWorld._test_fn = function(spriter)
+            return TUNING.SANITYAURA_MED/40
+        end
     ----------------------------------------------------------------------------------------------------------------
     print("WARNING:PCALL END   +++++++++++++++++++++++++++++++++++++++++++++++++")
 end)

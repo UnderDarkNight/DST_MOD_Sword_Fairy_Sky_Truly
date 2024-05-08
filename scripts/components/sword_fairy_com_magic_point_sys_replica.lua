@@ -21,6 +21,7 @@ local sword_fairy_com_magic_point_sys = Class(function(self, inst)
         self.current = temp_data[1]
         self.max = temp_data[2]
         self:ActiveUpdates()
+        self.inst:PushEvent("sword_fairy_mp_replica_data_refresh")
     end)
     
 

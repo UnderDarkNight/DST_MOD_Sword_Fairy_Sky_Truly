@@ -72,10 +72,16 @@
                 end)
             --------------------------------------------------------------------------------------------------------------------------
             ----- 参数初始化
-                local mp_current = inst.replica.sword_fairy_com_magic_point_sys:GetCurrent()
-                local mp_max = inst.replica.sword_fairy_com_magic_point_sys:GetMax()
-                local mp_percent = mp_current / mp_max
-                MP_Badge:SetPercent(mp_percent,mp_max)
+                local function ParamInit()
+                    local mp_current = inst.replica.sword_fairy_com_magic_point_sys:GetCurrent()
+                    local mp_max = inst.replica.sword_fairy_com_magic_point_sys:GetMax()
+                    local mp_percent = mp_current / mp_max
+                    MP_Badge:SetPercent(mp_percent,mp_max)
+                end
+                ParamInit()
+            --------------------------------------------------------------------------------------------------------------------------
+            ----- 连接事件
+                MP_Badge.inst:ListenForEvent("sword_fairy_mp_replica_data_refresh",ParamInit,inst)
         ------------------------------------------------------------------------------------------------------------------------------
         inst.__container_widget_badge = MP_Badge
     end
@@ -85,6 +91,8 @@
             inst.__container_widget_badge = nil
         end
     end
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 return function(inst)
@@ -108,6 +116,7 @@ return function(inst)
     inst:AddComponent("sword_fairy_com_magic_point_sys")
     inst.components.sword_fairy_com_magic_point_sys.current = 7
     inst.components.sword_fairy_com_magic_point_sys.max = 7
+    inst.components.sword_fairy_com_magic_point_sys.base_max = 7
 
 
     inst:ListenForEvent("linked_player",function(inst,owner)

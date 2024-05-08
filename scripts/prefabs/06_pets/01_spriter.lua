@@ -152,8 +152,19 @@ local function fn()
     
     inst.entity:SetPristine()
     ---------------------------------------------------------------------------------------------
+    ---
+        if TheWorld.ismastersim then
+            inst:AddComponent("sword_fairy_com_data")
+        end
+    ---------------------------------------------------------------------------------------------
     --- 玩家link
         inst.__link_player = net_entity(inst.GUID,"sword_fairy_spriter")
+        inst.GetLinkedPlayer = function(inst)
+            if TheWorld.ismastersim then
+                return inst.linked_player or inst.__link_player:value()
+            end
+            return inst.__link_player:value()
+        end
     ---------------------------------------------------------------------------------------------
     --- 安装容器
         add_container_before_not_ismastersim_return(inst)
@@ -244,6 +255,7 @@ local function fn()
             -----------------------------------------------------------
             --  连接玩家
                 inst.__link_player:set(owner)
+                inst.linked_player = owner
             -----------------------------------------------------------
             --  追着目标跑
                 if inst.__follow_task then
@@ -310,6 +322,15 @@ local function fn()
 
             inst:PushEvent("linked_player",owner)
             inst.Ready = true
+        end)
+    ---------------------------------------------------------------------------------------------
+    --- 
+        inst:ListenForEvent("ClosePlayer",function()
+            if inst.linked_player then
+                local offset_pt = Vector3(math.random(10,25) * (math.random()<0.5 and 1 or -1) , 0 ,   math.random(10,25) * (math.random()<0.5 and 1 or -1)  )
+                local player_pt = Vector3(inst.linked_player.Transform:GetWorldPosition())
+                inst.Transform:SetPosition(player_pt.x + offset_pt.x , 0 , player_pt.z + offset_pt.z)
+            end
         end)
     ---------------------------------------------------------------------------------------------
     ---
