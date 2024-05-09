@@ -80,6 +80,12 @@ TUNING["sword_fairy_sky_truly.Strings"][this_language] = TUNING["sword_fairy_sky
             ["sword_fairy_spriter"] = {
                 ["name"] = "Lotus Goblin",
                 ["inspect_str"] = "Very cute goblin.",
+                ["say.block_for_player"] = "How could you be so careless?",
+                ["say.refuse_food"] = "I don't like this one.",
+                ["say.eat_food"] = "It tastes good.",
+                ["say.light_on"] = {"It's so dark in here.","I need some light."},
+                ["say.sing"] = {"La la la la la ~","Seedlings, grow up fast!"},
+
             },
         --------------------------------------------------------------------
 

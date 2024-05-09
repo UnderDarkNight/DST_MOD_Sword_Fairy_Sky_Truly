@@ -99,6 +99,10 @@ return function(inst)
                 else
                     food:Remove()
                 end
+
+
+                inst:Say_With_Index("say.eat_food")
+
             end)
         end
     ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -123,8 +127,9 @@ return function(inst)
                     return false
                 end
                 if not CheckCanEat(inst,item) then
-                    inst:PushEvent("say_refuse_food")
-                    print("info CheckCanEat  false")
+                    -- inst:PushEvent("say_refuse_food")
+                    inst:Say_With_Index("say.refuse_food")
+                    -- print("info CheckCanEat  false")
                     return false
                 end  
                 ---------------------------------------------------------
@@ -143,6 +148,7 @@ return function(inst)
                     else
                         item:Remove()
                     end
+                    inst:Say_With_Index("say.eat_food")
                 ---------------------------------------------------------
                 --- 先修复上限，再回蓝
                     inst:PushEvent("MP_MAX_VALUE_INIT")

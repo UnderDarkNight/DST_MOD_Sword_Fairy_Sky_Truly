@@ -389,9 +389,50 @@ local flg,error_code = pcall(function()
         -- print(spriter.replica.sword_fairy_com_acceptable)
 
 
-        TheWorld._test_fn = function(spriter)
-            return TUNING.SANITYAURA_MED/40
-        end
+        -- TheWorld._test_fn = function(spriter)
+        --     return TUNING.SANITYAURA_MED/40
+        -- end
+    ----------------------------------------------------------------------------------------------------------------
+    --- 头顶的装饰
+        -- if ThePlayer.__test_hat then
+        --     ThePlayer.__test_hat:Remove()
+        -- end
+
+        -- local inst = SpawnPrefab("sword_fairy_spriter_hat")
+        -- inst.entity:SetParent(ThePlayer.entity)
+        -- inst.entity:AddFollower()
+        -- inst.Follower:FollowSymbol(ThePlayer.GUID, "headbase",0,-150, 0)
+
+
+        -- ThePlayer.__test_hat = inst
+    ----------------------------------------------------------------------------------------------------------------
+    ---
+            -- local spriter = ThePlayer:GetSpriter()
+            -- -- print(spriter)
+            -- if spriter then
+            -- --     -- spriter:PushEvent("force_light_on_with_mp_cost")
+            -- --     print(spriter.components.sword_fairy_com_magic_point_sys:GetCurrent())
+            --     -- spriter:PushEvent("Say",{
+            --     --     str = "666666666666",
+            --     --     color = Vector3(255/255,255/255,255/255),
+            --     -- })
+            --     -- spriter.components.talker.fontsize = 30
+            --     -- spriter.components.talker:SetOffsetFn(function()
+            --     --     return Vector3(0,-350,0)
+            --     -- end)
+            --     -- local color = {255/255,150/255,255/255,1}
+            --     -- spriter.components.talker:Say("1234646",nil,nil,nil,nil,color)
+
+            --     -- local sound_addr = "dontstarve/characters/wendy/hurt"
+                
+            --     -- spriter.SoundEmitter:PlaySound(sound_addr,"talk")
+            --     -- spriter.SoundEmitter:KillSound("talk")
+
+            --     spriter:PushEvent("Say","66666666666")
+            -- end
+            -- -- print(ThePlayer.replica.sword_fairy_com_workable)
+            
+            TheWorld.__test_sound = "dontstarve/characters/wendy/abigail/buff/attack"
     ----------------------------------------------------------------------------------------------------------------
     print("WARNING:PCALL END   +++++++++++++++++++++++++++++++++++++++++++++++++")
 end)

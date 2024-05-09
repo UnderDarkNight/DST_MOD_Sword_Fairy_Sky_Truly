@@ -29,6 +29,7 @@ local prefabs_name_list = {
 
 
     "01_spriter",                  --- 小宠物
+    "02_spriter_hat",              --- 头上的小宠物
 
 
 }

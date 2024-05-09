@@ -27,7 +27,10 @@ return function(inst)
         "prefabs/01_character/sky_truly_key_modules/11_playercontroller_hook_for_map_jump",     ---- 地图跳跃hook
         "prefabs/01_character/sky_truly_key_modules/12_map_jumper",                             ---- 地图跳跃组件安装
         "prefabs/01_character/sky_truly_key_modules/13_spriter_setup",                          ---- 安装跟随的精灵
-        "prefabs/01_character/sky_truly_key_modules/14_damage_mult",                            ---- 伤害倍增器
+        "prefabs/01_character/sky_truly_key_modules/14_spriter_hat_setup",                      ---- 精灵帽子
+        "prefabs/01_character/sky_truly_key_modules/16_workable_player",                        ---- 玩家右键自身
+        "prefabs/01_character/sky_truly_key_modules/17_damage_mult",                            ---- 伤害倍增器
+        "prefabs/01_character/sky_truly_key_modules/18_combat_hook",                            ---- combat 组件 hook
     }
     
     for k, lua_addr in pairs(modules) do

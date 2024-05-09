@@ -86,6 +86,11 @@ TUNING["sword_fairy_sky_truly.Strings"][this_language] = TUNING["sword_fairy_sky
           ["sword_fairy_spriter"] = {
                ["name"] = "莲花精魅",
                ["inspect_str"] = "很可爱的妖精",
+               ["say.block_for_player"] = {"怎么这么不小心","哎呀","邪魔退散、邪魔退散"},
+               ["say.refuse_food"] = {"这个我不吃","不要不要","我不要"},
+               ["say.eat_food"] = {"吧唧吧唧","味道不错","我来尝尝这个"},
+               ["say.light_on"] = {"女娲说：要有光","这里好暗","我需要点光"},
+               ["say.sing"] = {"啦啦啦","小苗苗，快快快长大","咿呀咿呀哦~"},
           },
         --------------------------------------------------------------------
 }

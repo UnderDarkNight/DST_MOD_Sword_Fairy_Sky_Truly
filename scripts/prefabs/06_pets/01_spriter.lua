@@ -158,13 +158,19 @@ local function fn()
         end
     ---------------------------------------------------------------------------------------------
     --- 玩家link
-        inst.__link_player = net_entity(inst.GUID,"sword_fairy_spriter")
+        inst.__link_player = net_entity(inst.GUID,"sword_fairy_spriter_link","sword_fairy_spriter_link")
         inst.GetLinkedPlayer = function(inst)
             if TheWorld.ismastersim then
                 return inst.linked_player or inst.__link_player:value()
             end
             return inst.__link_player:value()
         end
+        inst:ListenForEvent("sword_fairy_spriter_link",function(inst)    --- 反向链接玩家
+            local linked_player = inst:GetLinkedPlayer()
+            if linked_player then
+                linked_player.___spriter = inst
+            end
+        end)
     ---------------------------------------------------------------------------------------------
     --- 安装容器
         add_container_before_not_ismastersim_return(inst)
@@ -297,10 +303,11 @@ local function fn()
                             end
                         ---------------------------------------------------------------------
                         --- 特效处理
-                            if inst.fx then
-                                inst.fx:Remove()
-                                inst.fx = nil
-                            end
+                            -- if inst.fx then
+                            --     inst.fx:Remove()
+                            --     inst.fx = nil
+                            -- end
+                            inst:PushEvent("stop_fx")
                         ---------------------------------------------------------------------
                     else
                         ---------------------------------------------------------------------
@@ -312,10 +319,11 @@ local function fn()
                             end
                         ---------------------------------------------------------------------
                         inst:Close2Point(Vector3(owner.Transform:GetWorldPosition()),speed)
-                        if inst.fx == nil then
-                            inst.fx = inst:SpawnChild("cane_candy_fx")
-                            inst.fx.Transform:SetPosition(-0.5,1.5,0)
-                        end
+                        -- if inst.fx == nil then
+                        --     inst.fx = inst:SpawnChild("cane_candy_fx")
+                        --     inst.fx.Transform:SetPosition(-0.5,1.5,0)
+                        -- end
+                        inst:PushEvent("start_fx")
                     end
                 end)
             -----------------------------------------------------------

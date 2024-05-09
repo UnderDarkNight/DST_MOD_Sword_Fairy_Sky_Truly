@@ -65,6 +65,7 @@ AddAction(SWORD_FAIRY_COM_WORKABLE_ACTION)
 -- end)
 
 AddComponentAction("SCENE", "sword_fairy_com_workable" , function(target, doer, actions, right_click)-------    建筑一类的特殊交互使用
+    -- print(" +++ sword_fairy_com_workable +++ SCENE" )
     if doer and target then
             local sword_fairy_com_workable_com = target.replica.sword_fairy_com_workable or target.replica._.sword_fairy_com_workable
             if sword_fairy_com_workable_com and sword_fairy_com_workable_com:Test(doer,right_click) then
@@ -73,12 +74,20 @@ AddComponentAction("SCENE", "sword_fairy_com_workable" , function(target, doer, 
     end
 end)
 AddComponentAction("INVENTORY", "sword_fairy_com_workable" , function(item, doer, actions, right_click)    -------    物品一类交互使用
+    -- print(" +++ sword_fairy_com_workable +++ INVENTORY" )
     if doer and item then
             local sword_fairy_com_workable_com = item.replica.sword_fairy_com_workable or item.replica._.sword_fairy_com_workable
             if sword_fairy_com_workable_com and sword_fairy_com_workable_com:Test(doer,right_click) then
                 table.insert(actions, ACTIONS.SWORD_FAIRY_COM_WORKABLE_ACTION)
             end
     end
+end)
+
+AddComponentAction("SCENE","playercontroller",function()
+--     print("+++ SCENE +++ playercontroller")
+end)
+AddComponentAction("INVENTORY","playercontroller",function()
+--     print("+++ INVENTORY +++ playercontroller")
 end)
 
 local function handler_fn(player)
