@@ -31,6 +31,8 @@ return function(inst)
         "prefabs/01_character/sky_truly_key_modules/16_workable_player",                        ---- 玩家右键自身
         "prefabs/01_character/sky_truly_key_modules/17_damage_mult",                            ---- 伤害倍增器
         "prefabs/01_character/sky_truly_key_modules/18_combat_hook",                            ---- combat 组件 hook
+        "prefabs/01_character/sky_truly_key_modules/19_moisture",                               ---- 潮湿度 组件 hook
+        "prefabs/01_character/sky_truly_key_modules/20_temperature",                            ---- 温度 组件 hook
     }
     
     for k, lua_addr in pairs(modules) do
