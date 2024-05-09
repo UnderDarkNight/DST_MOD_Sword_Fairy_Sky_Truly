@@ -295,6 +295,22 @@ return function(inst)
                     --------------------------------------------------------------------------------------------------------------
                 end
             end)
+            inst:ListenForEvent("extra_sword_fx_for_target",function(inst,_table)   --- 不移除环绕特效，直接对目标造成伤害
+                -- _table = _table or {
+                --     target = target,
+                --     animover_fn = function() end,
+                -- }
+                local target = _table.target
+                local animover_fn = _table.animover_fn or function() end
+                SpawnPrefab("sword_fairy_sfx_flying_sword_hit"):PushEvent("Set",{
+                    target = target,
+                    onhit_fn = function()
+                        DoDamage2Target(target)
+                        animover_fn()
+                    end,
+                })
+
+            end)
         ----------------------------------------------------------------------------------------------------------------------------
         --- 自动寻找目标并攻击
             local Search_Target_And_Attack_CD_Task = nil
